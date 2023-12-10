@@ -15,7 +15,7 @@ import {
 import { useAuthContext } from '@src/feature/auth/provider/AuthProvider'
 import { FirebaseError } from '@firebase/util'
 import { getAuth, signOut } from 'firebase/auth'
-import { Navigate } from '@src/component/Navigate/Navigate'
+import { Navigate } from '@src/component/Navigate'
 import { useRouter } from '@src/hooks/useRouter/useRouter'
 
 export const Header = () => {
@@ -41,7 +41,7 @@ export const Header = () => {
   }
 
   return (
-    <chakra.header py={4} bgColor={'blue.600'}>
+    <chakra.header py={4} bgColor={'#FF9A00'}>
       <Container maxW={'container.lg'}>
         <Flex>
           <Navigate href={(path) => path.$url()}>
@@ -50,7 +50,7 @@ export const Header = () => {
                 opacity: 0.8,
               }}
             >
-              <Heading color={'white'}>Firebase Realtime Chat</Heading>
+              <Heading color={'white'}>アンケトル</Heading>
             </chakra.a>
           </Navigate>
           <Spacer aria-hidden />

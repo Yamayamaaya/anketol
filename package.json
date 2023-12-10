@@ -27,12 +27,14 @@
     "next": "13.1.2",
     "pathpida": "^0.18.1",
     "react": "18.2.0",
+    "react-datepicker": "^4.24.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@tsconfig/strictest": "^1.0.2",
     "@types/node": "18.11.0",
     "@types/react": "18.0.21",
+    "@types/react-datepicker": "^4.19.3",
     "@types/react-dom": "18.0.6",
     "autoprefixer": "^10.4.16",
     "eslint": "8.25.0",
