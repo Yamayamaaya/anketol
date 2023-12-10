@@ -11,9 +11,10 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { FormEvent, useEffect, useRef, useState } from 'react'
-import { getDatabase, onChildAdded, push, ref } from '@firebase/database'
+import { collection, addDoc, onSnapshot } from '@firebase/firestore'
 import { FirebaseError } from '@firebase/util'
 import { AuthGuard } from '@src/feature/auth/component/AuthGuard/AuthGuard'
+import { getFirestore } from 'firebase/firestore'
 
 type MessageProps = {
   message: string
@@ -39,9 +40,9 @@ export const Page = () => {
   const handleSendMessage = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
-      const db = getDatabase()
-      const dbRef = ref(db, 'chat')
-      await push(dbRef, {
+      const db = getFirestore()
+      const chatCollection = collection(db, 'chat')
+      await addDoc(chatCollection, {
         message,
       })
       setMessage('')
@@ -56,11 +57,16 @@ export const Page = () => {
 
   useEffect(() => {
     try {
-      const db = getDatabase()
-      const dbRef = ref(db, 'chat')
-      return onChildAdded(dbRef, (snapshot) => {
-        const message = String(snapshot.val()['message'] ?? '')
-        setChats((prev) => [...prev, { message }])
+      const db = getFirestore()
+      const chatCollection = collection(db, 'chat')
+      return onSnapshot(chatCollection, (snapshot) => {
+        snapshot.docs.forEach((doc) => {
+          const data = doc.data()
+          if ('message' in data) {
+            const message = String(data['message'] ?? '')
+            setChats((prev) => [...prev, { message }])
+          }
+        })
       })
     } catch (e) {
       if (e instanceof FirebaseError) {
