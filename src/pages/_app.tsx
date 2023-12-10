@@ -5,6 +5,7 @@ import { AuthProvider } from '@src/feature/auth/provider/AuthProvider'
 import { Header } from '@src/component/Header/Header'
 import { Footer } from '@src/component/Footer/Footer'
 import { theme } from '@src/lib/chakra/theme'
+import '../styles/globals.css'
 
 initializeFirebaseApp()
 function MyApp({ Component, pageProps }: AppProps) {
