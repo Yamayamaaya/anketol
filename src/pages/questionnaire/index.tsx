@@ -1,5 +1,6 @@
 // src/pages/questionnaire/index.tsx
-import { FormEvent, useState } from 'react'
+import { useState } from 'react'
+import type { FormEvent } from 'react'
 import { getFirestore, collection, addDoc } from '@firebase/firestore'
 import { FirebaseError } from '@firebase/util'
 import { FormControl, FormLabel, Input, Button } from '@chakra-ui/react'

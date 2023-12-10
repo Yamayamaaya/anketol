@@ -12,7 +12,8 @@ import {
   Spacer,
   useToast,
 } from '@chakra-ui/react'
-import { FormEvent, useState } from 'react'
+import { useState } from 'react'
+import type { FormEvent } from 'react'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import { FirebaseError } from '@firebase/util'
 import { useRouter } from '@src/hooks/useRouter/useRouter'
