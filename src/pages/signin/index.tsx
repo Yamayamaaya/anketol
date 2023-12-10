@@ -51,8 +51,17 @@ export const Page = () => {
         <Grid gap={4}>
           <Box display={'contents'}>
             <Center>
-              <Button onClick={handleGoogleSignIn} isLoading={isLoading}>
-                Googleでサインイン
+              <Button
+                onClick={handleGoogleSignIn}
+                isLoading={isLoading}
+                className="flex items-center gap-2"
+              >
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
+                  width="20"
+                  height="20"
+                />
+                <p>Googleでサインイン</p>
               </Button>
             </Center>
           </Box>

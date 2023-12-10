@@ -1,12 +1,18 @@
 import {
   Avatar,
-  Button,
   chakra,
   Menu,
   MenuButton,
+  MenuDivider,
   MenuItem,
   MenuList,
   useToast,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  DrawerHeader,
+  DrawerBody,
 } from '@chakra-ui/react'
 import { useAuthContext } from '@src/feature/auth/provider/AuthProvider'
 import { FirebaseError } from '@firebase/util'
@@ -14,11 +20,16 @@ import { getAuth, signOut } from 'firebase/auth'
 import { Navigate } from '@src/component/Navigate'
 import { useRouter } from '@src/hooks/useRouter/useRouter'
 import Image from 'next/image'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
+import { useState } from 'react'
+import { Link } from '@chakra-ui/react'
 
 export const Header = () => {
   const { user } = useAuthContext()
   const toast = useToast()
   const { push } = useRouter()
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleSignOut = async () => {
     try {
@@ -37,9 +48,16 @@ export const Header = () => {
     }
   }
 
+  const handleToggle = () => {
+    setIsOpen(!isOpen)
+  }
+
   return (
     <chakra.header py={4} bgColor={'#FF9A00'}>
       <div className="flex items-center justify-between w-full px-8">
+        <button onClick={handleToggle} className="w-8 h-8 text-white">
+          <FontAwesomeIcon icon={faBars} size="lg" />
+        </button>
         <Navigate href={(path) => path.$url()}>
           <chakra.a
             _hover={{
@@ -57,9 +75,18 @@ export const Header = () => {
         {user ? (
           <Menu>
             <MenuButton>
-              <Avatar flexShrink={0} width={10} height={10} />
+              <Avatar
+                flexShrink={0}
+                width={10}
+                height={10}
+                src={user?.photoURL || ''}
+              />
             </MenuButton>
             <MenuList py={0}>
+              <h4 className="px-3 pt-2 text-sm font-semibold text-gray-700">
+                {user?.displayName}
+              </h4>
+              <MenuDivider />
               <MenuItem onClick={handleSignOut}>サインアウト</MenuItem>
               <MenuItem onClick={() => push((path) => path.mypage.$url())}>
                 マイページ
@@ -67,13 +94,44 @@ export const Header = () => {
             </MenuList>
           </Menu>
         ) : (
-          <Navigate href={(path) => path.signin.$url()}>
-            <Button as={'a'} colorScheme={'teal'}>
-              サインイン
-            </Button>
-          </Navigate>
+          <Menu>
+            <MenuButton>
+              <Avatar flexShrink={0} width={10} height={10} />
+            </MenuButton>
+            <MenuList py={0}>
+              <h4 className="px-3 pt-2 text-sm font-semibold text-gray-700">
+                ゲスト
+              </h4>
+              <MenuDivider />
+              <MenuItem onClick={() => push((path) => path.signin.$url())}>
+                サインイン
+              </MenuItem>
+              <MenuItem onClick={() => push((path) => path.signup.$url())}>
+                サインアップ
+              </MenuItem>
+            </MenuList>
+          </Menu>
         )}
       </div>
+      <Drawer isOpen={isOpen} onClose={handleToggle} placement="left">
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>メニュー</DrawerHeader>
+          <DrawerBody className="flex flex-col items-start gap-5">
+            <Navigate href={(path) => path.$url()}>
+              <p className="text-gray-700 hover:text-black">トップページ</p>
+            </Navigate>
+            <Navigate href={(path) => path.questionnaire.$url()}>
+              <p className="text-gray-700 hover:text-black">アンケート投稿</p>
+            </Navigate>
+            <Navigate href={(path) => path.mypage.$url()}>
+              <p className="text-gray-700 hover:text-black">マイページ</p>
+            </Navigate>
+          </DrawerBody>
+          {/* Add the content of the drawer here */}
+        </DrawerContent>
+      </Drawer>
     </chakra.header>
   )
 }

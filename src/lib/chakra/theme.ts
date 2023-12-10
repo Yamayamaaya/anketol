@@ -5,6 +5,7 @@ export const theme = extendTheme({
     global: {
       'html, body,#__next': {
         height: '100%',
+        padding: 0,
         '&': {
           height: '100svh',
         },

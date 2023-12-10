@@ -8,9 +8,23 @@ import {
   Heading,
   Spacer,
 } from '@chakra-ui/react'
-import { signInWithGoogle } from '@src/lib/firebase/firebase'
+import {
+  signInWithGoogle,
+  saveUserToFirestore,
+} from '@src/lib/firebase/firebase'
 
 export const Page = () => {
+  const handleGoogleSignUp = async () => {
+    try {
+      const userCredential = await signInWithGoogle()
+      if (userCredential?.user) {
+        await saveUserToFirestore(userCredential.user)
+      }
+    } catch (e) {
+      // handle error
+    }
+  }
+
   return (
     <Container py={14}>
       <Heading>サインアップ</Heading>
@@ -19,7 +33,7 @@ export const Page = () => {
         <Grid gap={4}>
           <Box display={'contents'}>
             <Center>
-              <Button onClick={signInWithGoogle}>Googleでサインイン</Button>
+              <Button onClick={handleGoogleSignUp}>Googleでサインイン</Button>
             </Center>
           </Box>
         </Grid>
