@@ -38,7 +38,7 @@ export const Page = () => {
         status: 'success',
         position: 'top',
       })
-      push((path) => path.chat.$url())
+      push((path) => path.$url())
     } catch (e) {
       toast({
         title: 'エラーが発生しました。',
