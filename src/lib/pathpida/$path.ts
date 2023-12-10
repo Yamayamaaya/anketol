@@ -1,4 +1,7 @@
 export const pagesPath = {
+  "mypage": {
+    $url: (url?: { hash?: string }) => ({ pathname: '/mypage' as const, hash: url?.hash })
+  },
   "questionnaire": {
     $url: (url?: { hash?: string }) => ({ pathname: '/questionnaire' as const, hash: url?.hash })
   },

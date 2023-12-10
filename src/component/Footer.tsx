@@ -18,6 +18,9 @@ export const Footer = () => {
           <Navigate href={(path) => path.questionnaire.$url()}>
             <Link lineHeight={1}>アンケート投稿</Link>
           </Navigate>
+          <Navigate href={(path) => path.mypage.$url()}>
+            <Link lineHeight={1}>マイページ</Link>
+          </Navigate>
         </Flex>
       </Container>
     </chakra.footer>

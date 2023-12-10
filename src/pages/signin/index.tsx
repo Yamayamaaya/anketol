@@ -4,36 +4,25 @@ import {
   Center,
   chakra,
   Container,
-  FormControl,
-  FormLabel,
   Grid,
   Heading,
-  Input,
   Spacer,
   useToast,
 } from '@chakra-ui/react'
 import { useState } from 'react'
-import type { FormEvent } from 'react'
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import { FirebaseError } from '@firebase/util'
 import { useRouter } from '@src/hooks/useRouter/useRouter'
 import { signInWithGoogle } from '@src/lib/firebase/firebase'
 
 export const Page = () => {
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const toast = useToast()
   const { push } = useRouter()
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleGoogleSignIn = async () => {
     setIsLoading(true)
-    e.preventDefault()
     try {
-      const auth = getAuth()
-      await signInWithEmailAndPassword(auth, email, password)
-      setEmail('')
-      setPassword('')
+      await signInWithGoogle()
       toast({
         title: 'ログインしました。',
         status: 'success',
@@ -57,41 +46,18 @@ export const Page = () => {
   return (
     <Container py={14}>
       <Heading>サインイン</Heading>
-      <chakra.form onSubmit={handleSubmit}>
+      <chakra.form>
         <Spacer height={8} aria-hidden />
         <Grid gap={4}>
           <Box display={'contents'}>
-            <FormControl>
-              <FormLabel>メールアドレス</FormLabel>
-              <Input
-                type={'email'}
-                name={'email'}
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value)
-                }}
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel>パスワード</FormLabel>
-              <Input
-                type={'password'}
-                name={'password'}
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value)
-                }}
-              />
-            </FormControl>
+            <Center>
+              <Button onClick={handleGoogleSignIn} isLoading={isLoading}>
+                Googleでサインイン
+              </Button>
+            </Center>
           </Box>
         </Grid>
         <Spacer height={4} aria-hidden />
-        <Center>
-          <Button type={'submit'} isLoading={isLoading}>
-            ログイン
-          </Button>
-          <Button onClick={signInWithGoogle}>Googleでサインイン</Button>
-        </Center>
       </chakra.form>
     </Container>
   )
