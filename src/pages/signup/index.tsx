@@ -20,6 +20,7 @@ import {
 } from 'firebase/auth'
 import { FirebaseError } from '@firebase/util'
 import { useRouter } from '@src/hooks/useRouter/useRouter'
+import { signInWithGoogle } from '@src/lib/firebase/firebase'
 
 export const Page = () => {
   const [email, setEmail] = useState<string>('')
@@ -97,6 +98,7 @@ export const Page = () => {
           <Button type={'submit'} isLoading={isLoading}>
             アカウントを作成
           </Button>
+          <Button onClick={signInWithGoogle}>Googleでサインイン</Button>
         </Center>
       </chakra.form>
     </Container>
