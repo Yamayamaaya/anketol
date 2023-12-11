@@ -3,18 +3,20 @@ import { Table, Thead, Tbody, Tr, Th, TableContainer } from '@chakra-ui/react'
 import { getFirestore, collection, getDocs } from '@firebase/firestore'
 import { useState, useEffect } from 'react'
 import { TableItem } from '@src/component/TableItem'
+import type { Questionnaire } from '@src/types/questionnaire'
 
 const Page: NextPage = () => {
-  const [questionnaires, setQuestionnaires] = useState<any[]>([])
+  const [questionnaires, setQuestionnaires] = useState<Questionnaire[]>([])
 
   useEffect(() => {
     const fetchQuestionnaires = async () => {
       const db = getFirestore()
       const questionnairesCollection = collection(db, 'questionnaires')
       const questionnairesSnapshot = await getDocs(questionnairesCollection)
-      const questionnairesData = questionnairesSnapshot.docs.map((doc) =>
-        doc.data()
-      )
+      const questionnairesData = questionnairesSnapshot.docs.map((doc) => {
+        const data = doc.data()
+        return data as Questionnaire
+      })
       setQuestionnaires(questionnairesData)
     }
 

@@ -3,9 +3,10 @@ import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useUserById } from '@src/hooks/hooks/useUser'
 import { useEffect } from 'react'
+import type { Questionnaire } from '@src/types/questionnaire'
 
 interface TableItemProps {
-  questionnaire: any
+  questionnaire: Questionnaire
   index: number
 }
 

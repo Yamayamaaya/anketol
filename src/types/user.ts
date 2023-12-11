@@ -1,8 +1,10 @@
+import type { Timestamp } from 'firebase/firestore'
+
 export type User = {
   email: string
   displayName: string
   photoURL: string
-  createdTime: Date
-  updatedTime: Date
+  createdTime: Timestamp
+  updatedTime: Timestamp
   answerCount?: number
 }
