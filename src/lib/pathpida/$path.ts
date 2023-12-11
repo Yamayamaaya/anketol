@@ -3,6 +3,9 @@ export const pagesPath = {
     $url: (url?: { hash?: string }) => ({ pathname: '/mypage' as const, hash: url?.hash })
   },
   "questionnaire": {
+    "edit": {
+      $url: (url?: { hash?: string }) => ({ pathname: '/questionnaire/edit' as const, hash: url?.hash })
+    },
     $url: (url?: { hash?: string }) => ({ pathname: '/questionnaire' as const, hash: url?.hash })
   },
   "signin": {

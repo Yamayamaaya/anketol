@@ -40,7 +40,7 @@ export const TableItem = ({ questionnaire, index }: TableItemProps) => {
         />
         <span className="ml-2 text-sm">{user?.displayName}</span>
       </Td>
-      <Td>{questionnaire.expiry.toDate().toLocaleDateString()}</Td>
+      <Td>{questionnaire.expiry?.toDate().toLocaleDateString()}</Td>
     </Tr>
   )
 }
