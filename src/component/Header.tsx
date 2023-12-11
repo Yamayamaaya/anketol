@@ -23,7 +23,6 @@ import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
-import { Link } from '@chakra-ui/react'
 
 export const Header = () => {
   const { user } = useAuthContext()

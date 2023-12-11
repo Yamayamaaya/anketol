@@ -7,22 +7,30 @@ import { FormControl, FormLabel, Input, Button } from '@chakra-ui/react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import 'tailwindcss/tailwind.css'
+import { useAuthContext } from '@src/feature/auth/provider/AuthProvider'
 
 export const Page = () => {
   const [title, setTitle] = useState<string>('')
   const [url, setUrl] = useState<string>('')
   const [expiry, setExpiry] = useState(new Date())
+  const { user } = useAuthContext()
 
   const handleSendQuestionnaire = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
       const db = getFirestore()
-      const questionnaireCollection = collection(db, 'questionnaire')
-      await addDoc(questionnaireCollection, {
-        title,
-        expiry,
-        url,
-      })
+      const questionnairesCollection = collection(db, 'questionnaires')
+      if (user) {
+        const userId = user.uid
+        await addDoc(questionnairesCollection, {
+          title,
+          expiry,
+          url,
+          userId,
+          createdTime: new Date(),
+          updatedTime: new Date(),
+        })
+      }
       setTitle('')
       setExpiry(new Date())
       setUrl('')
@@ -44,6 +52,7 @@ export const Page = () => {
           <Input
             type="text"
             value={title}
+            placeholder="アンケートタイトル"
             onChange={(e) => setTitle(e.target.value)}
           />
         </FormControl>
@@ -52,6 +61,7 @@ export const Page = () => {
           <DatePicker
             selected={expiry}
             onChange={(date: Date) => setExpiry(date)}
+            placeholderText="有効期限"
             className="border border-gray-200 rounded-md w-[20.8rem] py-2 pl-2"
           />
           {/* FIXME:デザインゴリ押しすぎ */}

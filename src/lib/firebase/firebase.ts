@@ -46,5 +46,7 @@ export const saveUserToFirestore = async (user: User) => {
     email: user.email,
     displayName: user.displayName,
     photoURL: user.photoURL,
+    createdTime: new Date(),
+    updatedTime: new Date(),
   })
 }

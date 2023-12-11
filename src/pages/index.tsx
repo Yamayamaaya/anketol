@@ -17,12 +17,12 @@ const Page: NextPage = () => {
   useEffect(() => {
     const fetchQuestionnaires = async () => {
       const db = getFirestore()
-      const questionnaireCollection = collection(db, 'questionnaire')
-      const questionnaireSnapshot = await getDocs(questionnaireCollection)
-      const questionnaireData = questionnaireSnapshot.docs.map((doc) =>
+      const questionnairesCollection = collection(db, 'questionnaires')
+      const questionnairesSnapshot = await getDocs(questionnairesCollection)
+      const questionnairesData = questionnairesSnapshot.docs.map((doc) =>
         doc.data()
       )
-      setQuestionnaires(questionnaireData)
+      setQuestionnaires(questionnairesData)
     }
 
     fetchQuestionnaires()
