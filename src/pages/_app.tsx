@@ -6,10 +6,13 @@ import { AuthProvider } from '@src/feature/auth/provider/AuthProvider'
 import { Header } from '@src/component/Header'
 import { Footer } from '@src/component/Footer'
 import { theme } from '@src/lib/chakra/theme'
+import { useRouter } from 'next/router'
 import '../styles/globals.css'
 
 initializeFirebaseApp()
 function MyApp({ Component, pageProps }: AppProps) {
+  const { pathname } = useRouter()
+  const isSignInOrUpPage = pathname === '/signin' || pathname === '/signup'
   return (
     <>
       <Head>
@@ -18,16 +21,16 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <ChakraProvider theme={theme}>
         <AuthProvider>
-          <Header />
+          <Header isSignInOrUpPage={isSignInOrUpPage} />
           <chakra.main
             flex={1}
             display={'flex'}
             flexDirection={'column'}
-            minHeight={0}
+            height={0}
           >
             <Component {...pageProps} />
           </chakra.main>
-          <Footer />
+          <Footer isSignInOrUpPage={isSignInOrUpPage} />
         </AuthProvider>
       </ChakraProvider>
     </>

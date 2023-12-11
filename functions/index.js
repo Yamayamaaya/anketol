@@ -33,13 +33,15 @@ const updateUserAnswerCount = (answerLog) => {
   const userRef = admin
     .firestore()
     .collection('users')
-    .doc(answerLog.respondentGmail)
+    .where('email', '==', answerLog.respondentGmail)
     .get()
-    .then((doc) => {
-      if (doc.exists) {
-        const user = doc.data()
-        const newAnswerCount = user.answerCount + 1
-        doc.ref.update({ answerCount: newAnswerCount })
+    .then((querySnapshot) => {
+      if (querySnapshot.size === 1) {
+        const user = querySnapshot.docs[0].data()
+        // answerCountが存在しない場合は0を初期値とする
+        const currentAnswerCount = user.answerCount || 0
+        const newAnswerCount = currentAnswerCount + 1
+        querySnapshot.docs[0].ref.update({ answerCount: newAnswerCount })
       }
     })
 }
@@ -53,7 +55,9 @@ const updateQuestionnaireAnsweredCount = (answerLog) => {
     .then((doc) => {
       if (doc.exists) {
         const questionnaire = doc.data()
-        const newAnsweredCount = questionnaire.answeredCount + 1
+        // answeredCountが存在しない場合は0を初期値とする
+        const currentAnsweredCount = questionnaire.answeredCount || 0
+        const newAnsweredCount = currentAnsweredCount + 1
         doc.ref.update({ answeredCount: newAnsweredCount })
       }
     })

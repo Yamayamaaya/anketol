@@ -1,15 +1,8 @@
 import type { NextPage } from 'next'
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableContainer,
-} from '@chakra-ui/react'
+import { Table, Thead, Tbody, Tr, Th, TableContainer } from '@chakra-ui/react'
 import { getFirestore, collection, getDocs } from '@firebase/firestore'
 import { useState, useEffect } from 'react'
+import { TableItem } from '@src/component/TableItem'
 
 const Page: NextPage = () => {
   const [questionnaires, setQuestionnaires] = useState<any[]>([])
@@ -35,17 +28,18 @@ const Page: NextPage = () => {
           <Thead>
             <Tr>
               <Th>タイトル</Th>
-              <Th>URL</Th>
+              <Th> </Th>
+              <Th>投稿者</Th>
               <Th>有効期限</Th>
             </Tr>
           </Thead>
           <Tbody>
             {questionnaires.map((questionnaire, index) => (
-              <Tr key={index}>
-                <Td>{questionnaire.title}</Td>
-                <Td>{questionnaire.url}</Td>
-                <Td>{questionnaire.expiry.toDate().toLocaleDateString()}</Td>
-              </Tr>
+              <TableItem
+                questionnaire={questionnaire}
+                index={index}
+                key={index}
+              />
             ))}
           </Tbody>
         </Table>

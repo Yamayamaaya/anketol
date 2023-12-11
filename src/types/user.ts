@@ -1,0 +1,8 @@
+export type User = {
+  email: string
+  displayName: string
+  photoURL: string
+  createdTime: Date
+  updatedTime: Date
+  answerCount?: number
+}

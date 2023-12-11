@@ -18,13 +18,17 @@ import { useAuthContext } from '@src/feature/auth/provider/AuthProvider'
 import { FirebaseError } from '@firebase/util'
 import { getAuth, signOut } from 'firebase/auth'
 import { Navigate } from '@src/component/Navigate'
-import { useRouter } from '@src/hooks/useRouter/useRouter'
+import { useRouter } from '@src/hooks/hooks/useRouter'
 import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 
-export const Header = () => {
+interface HeaderProps {
+  isSignInOrUpPage: boolean
+}
+
+export const Header: React.FC<HeaderProps> = ({ isSignInOrUpPage }) => {
   const { user } = useAuthContext()
   const toast = useToast()
   const { push } = useRouter()
@@ -52,7 +56,13 @@ export const Header = () => {
   }
 
   return (
-    <chakra.header py={4} bgColor={'#FF9A00'}>
+    <chakra.header
+      py={4}
+      bgColor={'#FF9A00'}
+      className={`sticky top-0 z-50 ${
+        isSignInOrUpPage ? 'w-[40%]' : ''
+      } left-0`}
+    >
       <div className="flex items-center justify-between w-full px-8">
         <button onClick={handleToggle} className="w-8 h-8 text-white">
           <FontAwesomeIcon icon={faBars} size="lg" />
@@ -63,14 +73,17 @@ export const Header = () => {
               opacity: 0.8,
             }}
           >
-            <Image
-              src={'/logo_reverse.svg'}
-              alt={'アンケトル'}
-              width={200}
-              height={50}
-            />
+            {!isSignInOrUpPage && (
+              <Image
+                src={'/logo_reverse.svg'}
+                alt={'アンケトル'}
+                width={200}
+                height={50}
+              />
+            )}
           </chakra.a>
         </Navigate>
+
         {user ? (
           <Menu>
             <MenuButton>
@@ -78,7 +91,7 @@ export const Header = () => {
                 flexShrink={0}
                 width={10}
                 height={10}
-                src={user?.photoURL || ''}
+                src={user.photoURL || 'default_image_url'}
               />
             </MenuButton>
             <MenuList py={0}>
@@ -94,9 +107,11 @@ export const Header = () => {
           </Menu>
         ) : (
           <Menu>
-            <MenuButton>
-              <Avatar flexShrink={0} width={10} height={10} />
-            </MenuButton>
+            {!isSignInOrUpPage && (
+              <MenuButton>
+                <Avatar flexShrink={0} width={10} height={10} />
+              </MenuButton>
+            )}
             <MenuList py={0}>
               <h4 className="px-3 pt-2 text-sm font-semibold text-gray-700">
                 ゲスト
