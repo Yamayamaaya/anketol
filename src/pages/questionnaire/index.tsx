@@ -12,14 +12,14 @@ import { useAuthContext } from '@src/feature/auth/provider/AuthProvider'
 interface Questionnaire {
   title: string
   url: string
-  expiry: Date
+  expiry: Date | null
 }
 
 export const Page = () => {
   const [questionnaire, setQuestionnaire] = useState<Questionnaire>({
     title: '',
     url: '',
-    expiry: new Date(),
+    expiry: null,
   })
   const [inputError, setInputError] = useState<string>('')
   const [id, setId] = useState<string>('')
@@ -48,7 +48,7 @@ export const Page = () => {
       setQuestionnaire({
         title: '',
         url: '',
-        expiry: new Date(),
+        expiry: null,
       })
       setInputError('')
     } catch (e) {
@@ -115,6 +115,7 @@ export const Page = () => {
           <FormLabel>URL</FormLabel>
           <Input
             type="text"
+            placeholder="googleフォームのURL"
             value={questionnaire.url}
             onChange={(e) =>
               setQuestionnaire({ ...questionnaire, url: e.target.value })
