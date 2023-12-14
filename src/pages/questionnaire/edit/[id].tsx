@@ -2,17 +2,22 @@
 import { useState, useEffect, FormEvent } from 'react'
 import { useRouter } from 'next/router'
 import { getFirestore, doc, getDoc, updateDoc } from '@firebase/firestore'
-import { FormControl, FormLabel, Input, Button } from '@chakra-ui/react'
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  useToast,
+} from '@chakra-ui/react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import 'tailwindcss/tailwind.css'
 import type { Questionnaire } from '@src/types/questionnaire'
-import type { Omit } from 'utility-types'
 import { Timestamp } from 'firebase/firestore'
 
 export const Page = () => {
   const [questionnaire, setQuestionnaire] = useState<
-    Omit<Questionnaire, 'userId' | 'createdTime' | 'updatedTime'>
+    Pick<Questionnaire, 'title' | 'url' | 'expiry'>
   >({
     title: '',
     url: '',
@@ -21,10 +26,14 @@ export const Page = () => {
   const [inputError, setInputError] = useState<string>('')
   const router = useRouter()
   const { id } = router.query
+  const toast = useToast()
 
   useEffect(() => {
     const fetchQuestionnaire = async () => {
       const db = getFirestore()
+      if (!id) {
+        return
+      }
       const docRef = doc(db, 'questionnaires', id as string)
       const docSnap = await getDoc(docRef)
       if (docSnap.exists()) {
@@ -50,8 +59,17 @@ export const Page = () => {
         updatedTime: new Date(),
       })
       setInputError('')
+      toast({
+        title: '更新しました。',
+        status: 'success',
+        position: 'top',
+      })
     } catch (e) {
-      setInputError('問題が発生しました。再度お試しください。')
+      toast({
+        title: 'エラーが発生しました。',
+        status: 'error',
+        position: 'top',
+      })
     }
   }
 

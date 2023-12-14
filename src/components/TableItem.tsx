@@ -16,8 +16,6 @@ export const TableItem = ({ questionnaire, index }: TableItemProps) => {
 
   // Handle loading and error states appropriately here
 
-  console.log(questionnaire)
-
   return (
     <Tr key={index}>
       <Td>{questionnaire.title}</Td>

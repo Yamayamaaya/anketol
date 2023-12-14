@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import { Table, Thead, Tbody, Tr, Th, TableContainer } from '@chakra-ui/react'
 import { getFirestore, collection, getDocs } from '@firebase/firestore'
 import { useState, useEffect } from 'react'
-import { TableItem } from '@src/component/TableItem'
+import { TableItem } from '@src/components/TableItem'
 import type { Questionnaire } from '@src/types/questionnaire'
 
 const Page: NextPage = () => {

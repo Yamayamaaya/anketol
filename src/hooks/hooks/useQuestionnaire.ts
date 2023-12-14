@@ -17,7 +17,10 @@ export const useQuestionnaireById = (id: string) => {
         if (!questionnaireDoc.exists) {
           setQuestionnaire(null)
         } else {
-          const questionnaire = questionnaireDoc.data() as Questionnaire
+          const questionnaire = {
+            id: questionnaireDoc.id,
+            ...questionnaireDoc.data(),
+          } as Questionnaire
           setQuestionnaire(questionnaire)
         }
       } catch (e) {
@@ -51,7 +54,7 @@ export const useQuestionnaireByUserId = (userId: string) => {
         )
         console.log('querySnapshot', querySnapshot)
         const questionnaires = querySnapshot.docs.map(
-          (doc) => doc.data() as Questionnaire
+          (doc) => ({ id: doc.id, ...doc.data() } as Questionnaire)
         )
         setQuestionnaires(questionnaires)
       } catch (e) {

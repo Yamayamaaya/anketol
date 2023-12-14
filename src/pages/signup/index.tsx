@@ -4,7 +4,7 @@ import {
   saveUserToFirestore,
 } from '@src/lib/firebase/firebase'
 import Image from 'next/image'
-import { Navigate } from '@src/component/Navigate'
+import { Navigate } from '@src/components/Navigate'
 
 export const Page = () => {
   const handleGoogleSignUp = async () => {

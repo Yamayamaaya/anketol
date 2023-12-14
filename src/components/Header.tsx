@@ -17,7 +17,7 @@ import {
 import { useAuthContext } from '@src/feature/auth/provider/AuthProvider'
 import { FirebaseError } from '@firebase/util'
 import { getAuth, signOut } from 'firebase/auth'
-import { Navigate } from '@src/component/Navigate'
+import { Navigate } from '@src/components/Navigate'
 import { useRouter } from '@src/hooks/hooks/useRouter'
 import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

@@ -3,36 +3,49 @@ import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { getFirestore, collection, doc, setDoc } from '@firebase/firestore'
 import { FirebaseError } from '@firebase/util'
-import { FormControl, FormLabel, Input, Button } from '@chakra-ui/react'
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  useToast,
+} from '@chakra-ui/react' // Added Alert, AlertIcon
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import 'tailwindcss/tailwind.css'
 import { useAuthContext } from '@src/feature/auth/provider/AuthProvider'
 import type { Questionnaire } from '@src/types/questionnaire'
-import type { Omit } from 'utility-types'
 import { Timestamp } from 'firebase/firestore'
+import { useRouter } from 'next/router' // Added useRouter
 
 // TODO: edit.tsxと共通化
 export const Page = () => {
   const [questionnaire, setQuestionnaire] = useState<
-    Omit<Questionnaire, 'userId' | 'createdTime' | 'updatedTime'>
+    Pick<Questionnaire, 'title' | 'url' | 'expiry'>
   >({
     title: '',
     url: '',
     expiry: null,
   })
   const [inputError, setInputError] = useState<string>('')
-  const [id, setId] = useState<string>('')
   const { user } = useAuthContext()
+  const router = useRouter()
+  const toast = useToast()
 
   const handleSendQuestionnaire = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (!varidate()) {
+
+    const isValid = await varidate()
+    if (!isValid) {
       return
     }
+    const id = await extractFormId(questionnaire.url)
+
     try {
       const db = getFirestore()
       const questionnairesCollection = collection(db, 'questionnaires')
+      console.log(id)
+      console.log(questionnairesCollection)
       if (user) {
         const userId = user.uid
         const docRef = doc(questionnairesCollection, id)
@@ -44,6 +57,7 @@ export const Page = () => {
           createdTime: new Date(),
           updatedTime: new Date(),
         })
+        router.push('/') // Redirect to home page after successful submission
       }
       setQuestionnaire({
         title: '',
@@ -51,10 +65,19 @@ export const Page = () => {
         expiry: null,
       })
       setInputError('')
+      toast({
+        title: '投稿しました。',
+        status: 'success',
+        position: 'top',
+      })
     } catch (e) {
       if (e instanceof FirebaseError) {
         console.log(e)
-        setInputError('問題が発生しました。再度お試しください。')
+        toast({
+          title: 'エラーが発生しました。',
+          status: 'error',
+          position: 'top',
+        })
       }
     }
   }
@@ -78,8 +101,12 @@ export const Page = () => {
       return false
     }
 
-    setId(questionnaire.url.split('/')[6] ?? '')
     return true
+  }
+
+  const extractFormId = (url: string) => {
+    const formId = url.split('/')[6]
+    return formId
   }
 
   return (

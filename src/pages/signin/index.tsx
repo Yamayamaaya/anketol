@@ -4,7 +4,7 @@ import { FirebaseError } from '@firebase/util'
 import { useRouter } from '@src/hooks/hooks/useRouter'
 import { signInWithGoogle } from '@src/lib/firebase/firebase'
 import Image from 'next/image'
-import { Navigate } from '@src/component/Navigate'
+import { Navigate } from '@src/components/Navigate'
 
 export const Page = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
