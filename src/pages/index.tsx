@@ -14,9 +14,9 @@ const Page: NextPage = () => {
     useState(questionnaires)
   useEffect(() => {
     setOtherPeopleQuestionnaires(
-      questionnaires.filter(
-        (questionnaire) => questionnaire.userId !== user?.id
-      )
+      questionnaires.filter((questionnaire) => {
+        return questionnaire.userId !== user?.id && questionnaire.active
+      })
     )
   }, [questionnaires, user])
 

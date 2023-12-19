@@ -33,9 +33,8 @@ import { activateQuestionnaire } from '@src/feature/questionnaire/activateQuesti
 
 export const Page = () => {
   const { user: authUser } = useAuthContext()
-  const { user, loading: loadingUser } = useUserById(authUser?.uid)
-  const { questionnaires, loading: loadingQuestionnaire } =
-    useQuestionnaireByUserId(user?.id)
+  const { user } = useUserById(authUser?.uid)
+  const { questionnaires } = useQuestionnaireByUserId(user?.id)
   const [selectedTab, setSelectedTab] = useState('profile')
   const toast = useToast()
   const router = useRouter()
