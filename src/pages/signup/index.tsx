@@ -10,11 +10,12 @@ export const Page = () => {
   const handleGoogleSignUp = async () => {
     try {
       const userCredential = await signInWithGoogle()
+      console.log(userCredential)
       if (userCredential?.user) {
         await saveUserToFirestore(userCredential.user)
       }
     } catch (e) {
-      // handle error
+      console.error('Firebase Authentication Error', e)
     }
   }
 

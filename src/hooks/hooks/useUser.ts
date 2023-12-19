@@ -16,7 +16,12 @@ export const useUserById = (id: string) => {
         if (!userDoc.exists) {
           setUser(null)
         } else {
-          const user = userDoc.data() as User
+          const user =
+            // userDoc.data() as User
+            {
+              id: userDoc.id,
+              ...userDoc.data(),
+            } as User
           setUser(user)
         }
       } catch (e) {

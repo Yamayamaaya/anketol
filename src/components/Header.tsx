@@ -134,13 +134,19 @@ export const Header: React.FC<HeaderProps> = ({ isSignInOrUpPage }) => {
           <DrawerHeader>メニュー</DrawerHeader>
           <DrawerBody className="flex flex-col items-start gap-5">
             <Navigate href={(path) => path.$url()}>
-              <p className="text-gray-700 hover:text-black">トップページ</p>
+              <p className="text-gray-700 hover:text-black hover:font-semibold">
+                トップページ
+              </p>
             </Navigate>
             <Navigate href={(path) => path.questionnaire.$url()}>
-              <p className="text-gray-700 hover:text-black">アンケート投稿</p>
+              <p className="text-gray-700 hover:text-black hover:font-semibold">
+                アンケート投稿
+              </p>
             </Navigate>
             <Navigate href={(path) => path.mypage.$url()}>
-              <p className="text-gray-700 hover:text-black">マイページ</p>
+              <p className="text-gray-700 hover:text-black hover:font-semibold">
+                マイページ
+              </p>
             </Navigate>
           </DrawerBody>
           {/* Add the content of the drawer here */}

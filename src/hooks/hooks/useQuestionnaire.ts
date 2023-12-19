@@ -3,6 +3,37 @@ import type { Questionnaire } from '@src/types/questionnaire'
 import { getFirestore, doc, getDoc } from '@firebase/firestore'
 import { collection, getDocs, orderBy, query, where } from 'firebase/firestore'
 
+export const useQuestionnaires = () => {
+  const [questionnaires, setQuestionnaires] = useState<Questionnaire[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+  const [error, setError] = useState<Error | null>(null)
+
+  useEffect(() => {
+    const fetchQuestionnaires = async () => {
+      try {
+        const db = getFirestore()
+        const querySnapshot = await getDocs(
+          query(
+            collection(db, 'questionnaires'),
+            orderBy('createdTime', 'desc')
+          )
+        )
+        const questionnaires = querySnapshot.docs.map(
+          (doc) => ({ id: doc.id, ...doc.data() } as Questionnaire)
+        )
+        setQuestionnaires(questionnaires)
+      } catch (e) {
+        setError(e as Error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchQuestionnaires()
+  }, [])
+
+  return { questionnaires, loading, error }
+}
 export const useQuestionnaireById = (id: string) => {
   const [questionnaire, setQuestionnaire] = useState<Questionnaire | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
@@ -53,6 +84,40 @@ export const useQuestionnaireByUserId = (userId: string) => {
           )
         )
         console.log('querySnapshot', querySnapshot)
+        const questionnaires = querySnapshot.docs.map(
+          (doc) => ({ id: doc.id, ...doc.data() } as Questionnaire)
+        )
+        setQuestionnaires(questionnaires)
+      } catch (e) {
+        setError(e as Error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchQuestionnaires()
+  }, [userId])
+
+  return { questionnaires, loading, error }
+}
+
+export const useOtherPeopleQuestionnairesByUserId = (userId: string) => {
+  const [questionnaires, setQuestionnaires] = useState<Questionnaire[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+  const [error, setError] = useState<Error | null>(null)
+
+  useEffect(() => {
+    const fetchQuestionnaires = async () => {
+      try {
+        const db = getFirestore()
+        const querySnapshot = await getDocs(
+          query(
+            collection(db, 'questionnaires'),
+            where('userId', '==', userId),
+            where('isAuthenticated', '==', true),
+            orderBy('createdTime', 'desc')
+          )
+        )
         const questionnaires = querySnapshot.docs.map(
           (doc) => ({ id: doc.id, ...doc.data() } as Questionnaire)
         )

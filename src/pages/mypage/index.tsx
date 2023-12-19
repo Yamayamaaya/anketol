@@ -158,6 +158,7 @@ const PostedTab = (questionnaires: Questionnaire[], toast: any) => {
         <Thead>
           <Tr>
             <Th> </Th>
+            <Th>有効</Th>
             <Th>タイトル</Th>
             <Th>認証</Th>
             <Th>有効期限</Th>

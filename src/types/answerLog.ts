@@ -1,11 +1,9 @@
 import type { Timestamp } from 'firebase/firestore'
 
-export type User = {
+export type AnswerLog = {
   id: string
-  email: string
-  displayName: string
-  photoURL: string
+  formId: string
+  respondentGmail: string
   createdTime: Timestamp
   updatedTime: Timestamp
-  answerCount?: number
 }

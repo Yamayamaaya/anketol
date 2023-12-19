@@ -1,27 +1,17 @@
 import type { NextPage } from 'next'
 import { Table, Thead, Tbody, Tr, Th, TableContainer } from '@chakra-ui/react'
-import { getFirestore, collection, getDocs } from '@firebase/firestore'
-import { useState, useEffect } from 'react'
 import { TableItem } from '@src/components/TableItem'
-import type { Questionnaire } from '@src/types/questionnaire'
+import { useAuthContext } from '@src/feature/auth/provider/AuthProvider'
+import { useUserById } from '@src/hooks/hooks/useUser'
+import { useQuestionnaires } from '@src/hooks/hooks/useQuestionnaire'
 
 const Page: NextPage = () => {
-  const [questionnaires, setQuestionnaires] = useState<Questionnaire[]>([])
-
-  useEffect(() => {
-    const fetchQuestionnaires = async () => {
-      const db = getFirestore()
-      const questionnairesCollection = collection(db, 'questionnaires')
-      const questionnairesSnapshot = await getDocs(questionnairesCollection)
-      const questionnairesData = questionnairesSnapshot.docs.map((doc) => {
-        const data = doc.data()
-        return data as Questionnaire
-      })
-      setQuestionnaires(questionnairesData)
-    }
-
-    fetchQuestionnaires()
-  }, [])
+  const { user: authUser } = useAuthContext()
+  const { user } = useUserById(authUser?.uid || '')
+  const { questionnaires } = useQuestionnaires()
+  const otherPeopleQuestionnaires = questionnaires.filter(
+    (questionnaire) => questionnaire.userId !== authUser?.uid
+  )
 
   return (
     <>
@@ -32,15 +22,16 @@ const Page: NextPage = () => {
               <Th>タイトル</Th>
               <Th> </Th>
               <Th>投稿者</Th>
-              <Th>有効期限</Th>
+              <Th>回答</Th>
             </Tr>
           </Thead>
           <Tbody>
-            {questionnaires.map((questionnaire, index) => (
+            {otherPeopleQuestionnaires.map((questionnaire, index) => (
               <TableItem
                 questionnaire={questionnaire}
                 index={index}
                 key={index}
+                user={user || undefined}
               />
             ))}
           </Tbody>
