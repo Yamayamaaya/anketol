@@ -2,12 +2,13 @@ import { useState, useEffect } from 'react'
 import type { User } from '@src/types/user'
 import { getFirestore, doc, getDoc } from '@firebase/firestore'
 
-export const useUserById = (id: string) => {
+export const useUserById = (id?: string) => {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<Error | null>(null)
 
   useEffect(() => {
+    if (!id) return
     const fetchUser = async () => {
       try {
         const db = getFirestore()
@@ -16,12 +17,10 @@ export const useUserById = (id: string) => {
         if (!userDoc.exists) {
           setUser(null)
         } else {
-          const user =
-            // userDoc.data() as User
-            {
-              id: userDoc.id,
-              ...userDoc.data(),
-            } as User
+          const user = {
+            id: userDoc.id,
+            ...userDoc.data(),
+          } as User
           setUser(user)
         }
       } catch (e) {

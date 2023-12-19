@@ -34,13 +34,14 @@ export const useQuestionnaires = () => {
 
   return { questionnaires, loading, error }
 }
-export const useQuestionnaireById = (id: string) => {
+export const useQuestionnaireById = (id?: string) => {
   const [questionnaire, setQuestionnaire] = useState<Questionnaire | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<Error | null>(null)
 
   useEffect(() => {
     const fetchQuestionnaire = async () => {
+      if (!id) return
       try {
         const db = getFirestore()
         const questionnaireDocRef = doc(db, 'questionnaires', id)
@@ -67,13 +68,14 @@ export const useQuestionnaireById = (id: string) => {
   return { questionnaire, loading, error }
 }
 
-export const useQuestionnaireByUserId = (userId: string) => {
+export const useQuestionnaireByUserId = (userId?: string) => {
   const [questionnaires, setQuestionnaires] = useState<Questionnaire[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<Error | null>(null)
 
   useEffect(() => {
     const fetchQuestionnaires = async () => {
+      if (!userId) return
       try {
         const db = getFirestore()
         const querySnapshot = await getDocs(
@@ -83,7 +85,6 @@ export const useQuestionnaireByUserId = (userId: string) => {
             orderBy('createdTime', 'desc')
           )
         )
-        console.log('querySnapshot', querySnapshot)
         const questionnaires = querySnapshot.docs.map(
           (doc) => ({ id: doc.id, ...doc.data() } as Questionnaire)
         )

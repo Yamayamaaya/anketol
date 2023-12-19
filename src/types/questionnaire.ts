@@ -10,5 +10,6 @@ export type Questionnaire = {
   createdTime: Timestamp
   updatedTime: Timestamp
   isAuthenticated: boolean
+  active: boolean
   answeredCount?: number
 }

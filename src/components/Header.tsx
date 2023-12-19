@@ -45,9 +45,7 @@ export const Header: React.FC<HeaderProps> = ({ isSignInOrUpPage }) => {
       })
       push((path) => path.signin.$url())
     } catch (e) {
-      if (e instanceof FirebaseError) {
-        console.log(e)
-      }
+      console.error('Firebase Authentication Error', e)
     }
   }
 

@@ -12,10 +12,11 @@ import {
   Divider,
   useToast,
   Badge,
+  Radio,
 } from '@chakra-ui/react'
 import { useAuthContext } from '@src/feature/auth/provider/AuthProvider'
 import type { User } from '@src/types/user'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useUserById } from '@src/hooks/hooks/useUser'
 import { useQuestionnaireByUserId } from '@src/hooks/hooks/useQuestionnaire'
 import type { Questionnaire } from '@src/types/questionnaire'
@@ -28,16 +29,16 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'next/router'
 import { getFirestore, doc, deleteDoc } from 'firebase/firestore'
+import { activateQuestionnaire } from '@src/feature/questionnaire/activateQuestionneaire'
 
 export const Page = () => {
   const { user: authUser } = useAuthContext()
-  const { user, loading: loadingUser } = useUserById(authUser?.uid || '')
+  const { user, loading: loadingUser } = useUserById(authUser?.uid)
   const { questionnaires, loading: loadingQuestionnaire } =
-    useQuestionnaireByUserId(authUser?.uid || '')
+    useQuestionnaireByUserId(user?.id)
   const [selectedTab, setSelectedTab] = useState('profile')
   const toast = useToast()
-
-  useEffect(() => {}, [loadingUser, loadingQuestionnaire])
+  const router = useRouter()
 
   if (!user) {
     return <Box>ログインしていません</Box>
@@ -98,7 +99,7 @@ export const Page = () => {
       </div>
       <div className="w-3/4 h-screen">
         {selectedTab === 'profile' && ProfileTab(user)}
-        {selectedTab === 'posted' && PostedTab(questionnaires, toast)}
+        {selectedTab === 'posted' && PostedTab(questionnaires, toast, router)}
         {/* {selectedTab === 'answered' && <div>回答済みアンケート</div>}
         {selectedTab === 'signout' && <div>サインアウト</div>} */}
       </div>
@@ -134,7 +135,11 @@ const ProfileTab = (user: User) => {
   )
 }
 
-const PostedTab = (questionnaires: Questionnaire[], toast: any) => {
+const PostedTab = (
+  questionnaires: Questionnaire[],
+  toast: any,
+  router: any
+) => {
   const handleDeleteQuestionnaire = async (questionnaireId: string) => {
     const db = getFirestore()
     const docRef = doc(db, 'questionnaires', questionnaireId)
@@ -146,13 +151,26 @@ const PostedTab = (questionnaires: Questionnaire[], toast: any) => {
     })
     router.reload()
   }
-  const router = useRouter()
+
   const handleEditQuestionnaire = async (questionnaireId: string) => {
     router.push(`/questionnaire/edit/${questionnaireId}`)
   }
 
+  const onChangeActive = async (questionnaireId: string) => {
+    await activateQuestionnaire(questionnaireId)
+    toast({
+      title: '更新しました。',
+      status: 'success',
+      position: 'top',
+    })
+    setTimeout(() => {
+      router.reload()
+    }, 200)
+  }
+  // リロードはせず、再レンダリングする
+
   return (
-    <TableContainer className="p-4 ">
+    <TableContainer className="px-4 pt-12">
       <p className="text-2xl font-bold fixed">投稿済みアンケート</p>
       <Table variant="simple" className="mt-16 w-full overflow-x-auto">
         <Thead>
@@ -187,6 +205,15 @@ const PostedTab = (questionnaires: Questionnaire[], toast: any) => {
                     className="h-3 w-3 ml-2"
                   />
                 </button>
+              </Td>
+              <Td>
+                <Radio
+                  size="md"
+                  name="1"
+                  colorScheme="green"
+                  defaultChecked={questionnaire.active}
+                  onChange={() => onChangeActive(questionnaire.id)}
+                ></Radio>
               </Td>
               <Td>{questionnaire.title}</Td>
               <Td>

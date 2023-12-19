@@ -9,6 +9,7 @@ import {
   Input,
   Button,
   useToast,
+  Checkbox,
 } from '@chakra-ui/react' // Added Alert, AlertIcon
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -17,15 +18,17 @@ import { useAuthContext } from '@src/feature/auth/provider/AuthProvider'
 import type { Questionnaire } from '@src/types/questionnaire'
 import { Timestamp } from 'firebase/firestore'
 import { useRouter } from 'next/router' // Added useRouter
+import { activateQuestionnaire } from '@src/feature/questionnaire/activateQuestionneaire'
 
 // TODO: edit.tsxと共通化
 export const Page = () => {
   const [questionnaire, setQuestionnaire] = useState<
-    Pick<Questionnaire, 'title' | 'url' | 'expiry'>
+    Pick<Questionnaire, 'title' | 'url' | 'expiry' | 'active'>
   >({
     title: '',
     url: '',
     expiry: null,
+    active: false,
   })
   const [inputError, setInputError] = useState<string>('')
   const { user } = useAuthContext()
@@ -44,9 +47,7 @@ export const Page = () => {
     try {
       const db = getFirestore()
       const questionnairesCollection = collection(db, 'questionnaires')
-      console.log(id)
-      console.log(questionnairesCollection)
-      if (user) {
+      if (user && id) {
         const userId = user.uid
         const docRef = doc(questionnairesCollection, id)
         await setDoc(docRef, {
@@ -56,13 +57,17 @@ export const Page = () => {
           userId,
           createdTime: new Date(),
           updatedTime: new Date(),
+        }).then(() => {
+          activateQuestionnaire(id)
         })
         router.push('/') // Redirect to home page after successful submission
       }
+
       setQuestionnaire({
         title: '',
         url: '',
         expiry: null,
+        active: false,
       })
       setInputError('')
       toast({
@@ -72,7 +77,7 @@ export const Page = () => {
       })
     } catch (e) {
       if (e instanceof FirebaseError) {
-        console.log(e)
+        console.error('Firebase Error', e)
         toast({
           title: 'エラーが発生しました。',
           status: 'error',
@@ -85,6 +90,10 @@ export const Page = () => {
   const varidate = () => {
     if (questionnaire.title === '') {
       setInputError('タイトルを入力してください')
+      return false
+    }
+    if (questionnaire.expiry === null) {
+      setInputError('有効期限を入力してください')
       return false
     }
     if (questionnaire.url === '') {
@@ -127,7 +136,7 @@ export const Page = () => {
           />
         </FormControl>
         <FormControl>
-          <FormLabel>有効期限</FormLabel>
+          <FormLabel className="pt-3">有効期限</FormLabel>
           <DatePicker
             selected={
               questionnaire.expiry ? questionnaire.expiry.toDate() : null
@@ -144,7 +153,7 @@ export const Page = () => {
           {/* FIXME:デザインゴリ押しすぎ */}
         </FormControl>
         <FormControl>
-          <FormLabel>URL</FormLabel>
+          <FormLabel className="pt-3">URL</FormLabel>
           <Input
             type="text"
             placeholder="googleフォームのURL"
@@ -153,6 +162,25 @@ export const Page = () => {
               setQuestionnaire({ ...questionnaire, url: e.target.value })
             }
           />
+        </FormControl>
+        <FormControl>
+          <FormLabel className="pt-3">有効</FormLabel>
+          <Checkbox
+            isChecked={questionnaire.active}
+            onChange={(e) =>
+              setQuestionnaire({ ...questionnaire, active: e.target.checked })
+            }
+          />
+          {questionnaire.active ? (
+            <p
+              className="text-gray-500 text-sm
+            "
+            >
+              ※他のアンケートを無効にします
+            </p>
+          ) : (
+            <></>
+          )}
         </FormControl>
         <Button type="submit" className="mt-6">
           投稿

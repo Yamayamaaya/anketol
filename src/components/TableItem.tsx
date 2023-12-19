@@ -20,10 +20,6 @@ export const TableItem = ({ questionnaire, index, user }: TableItemProps) => {
     useAnswerLogsByRespondentGmail(user?.email || '')
 
   useEffect(() => {}, [loading, loadingAnswerLogs])
-  // Handle loading and error states appropriately here
-
-  console.log(answerLogs)
-  console.log(questionnaire.id)
 
   const isAnswered = answerLogs.some(
     (answerLog) => answerLog.formId === questionnaire.id

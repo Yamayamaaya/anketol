@@ -8,20 +8,23 @@ import {
   Input,
   Button,
   useToast,
+  Checkbox,
 } from '@chakra-ui/react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import 'tailwindcss/tailwind.css'
 import type { Questionnaire } from '@src/types/questionnaire'
 import { Timestamp } from 'firebase/firestore'
+import { activateQuestionnaire } from '@src/feature/questionnaire/activateQuestionneaire'
 
 export const Page = () => {
   const [questionnaire, setQuestionnaire] = useState<
-    Pick<Questionnaire, 'title' | 'url' | 'expiry'>
+    Pick<Questionnaire, 'title' | 'url' | 'expiry' | 'active'>
   >({
     title: '',
     url: '',
     expiry: null,
+    active: false,
   })
   const [inputError, setInputError] = useState<string>('')
   const router = useRouter()
@@ -52,12 +55,17 @@ export const Page = () => {
     try {
       const db = getFirestore()
       const docRef = doc(db, 'questionnaires', id as string)
-      await updateDoc(docRef, {
-        title: questionnaire.title,
-        expiry: questionnaire.expiry,
-        url: questionnaire.url,
-        updatedTime: new Date(),
-      })
+      if (id) {
+        await updateDoc(docRef, {
+          title: questionnaire.title,
+          expiry: questionnaire.expiry,
+          url: questionnaire.url,
+          updatedTime: new Date(),
+        }).then(() => {
+          activateQuestionnaire(id as string)
+        })
+        router.push('/')
+      }
       setInputError('')
       toast({
         title: '更新しました。',
@@ -89,6 +97,12 @@ export const Page = () => {
       setInputError('URLが正しくありません')
       return false
     }
+
+    if (questionnaire.expiry === null) {
+      setInputError('有効期限を入力してください')
+      return false
+    }
+
     return true
   }
 
@@ -99,7 +113,7 @@ export const Page = () => {
         className="p-6 mt-6 text-left border w-96 rounded-xl shadow-xl bg-white"
       >
         <FormControl>
-          <FormLabel>タイトル</FormLabel>
+          <FormLabel className="pt-3">タイトル</FormLabel>
           <Input
             type="text"
             value={questionnaire.title}
@@ -110,7 +124,7 @@ export const Page = () => {
           />
         </FormControl>
         <FormControl>
-          <FormLabel>有効期限</FormLabel>
+          <FormLabel className="pt-3">有効期限</FormLabel>
           <DatePicker
             selected={
               questionnaire.expiry ? questionnaire.expiry.toDate() : null
@@ -126,7 +140,7 @@ export const Page = () => {
           />
         </FormControl>
         <FormControl>
-          <FormLabel>URL</FormLabel>
+          <FormLabel className="pt-3">URL</FormLabel>
           <Input
             type="text"
             placeholder="googleフォームのURL"
@@ -135,6 +149,25 @@ export const Page = () => {
               setQuestionnaire({ ...questionnaire, url: e.target.value })
             }
           />
+        </FormControl>
+        <FormControl>
+          <FormLabel className="pt-3">有効</FormLabel>
+          <Checkbox
+            isChecked={questionnaire.active}
+            onChange={(e) =>
+              setQuestionnaire({ ...questionnaire, active: e.target.checked })
+            }
+          />
+          {questionnaire.active ? (
+            <p
+              className="text-gray-500 text-sm
+            "
+            >
+              ※他のアンケートを無効にします
+            </p>
+          ) : (
+            <></>
+          )}
         </FormControl>
         <Button type="submit" className="mt-6">
           更新

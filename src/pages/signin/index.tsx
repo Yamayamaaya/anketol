@@ -28,7 +28,7 @@ export const Page = () => {
         position: 'top',
       })
       if (e instanceof FirebaseError) {
-        console.log(e)
+        console.error('Firebase Authentication Error', e)
       }
     } finally {
       setIsLoading(false)
