@@ -32,7 +32,11 @@ export const signInWithGoogle = async () => {
   const auth = getAuth()
   const provider = new GoogleAuthProvider()
   try {
-    return await signInWithPopup(auth, provider)
+    const userCredential = await signInWithPopup(auth, provider)
+    if (userCredential?.user) {
+      await saveUserToFirestore(userCredential.user)
+    }
+    return userCredential
   } catch (e) {
     console.error(e)
     return null
