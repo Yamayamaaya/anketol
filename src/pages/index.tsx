@@ -4,14 +4,21 @@ import { TableItem } from '@src/components/TableItem'
 import { useAuthContext } from '@src/feature/auth/provider/AuthProvider'
 import { useUserById } from '@src/hooks/hooks/useUser'
 import { useQuestionnaires } from '@src/hooks/hooks/useQuestionnaire'
+import { useEffect, useState } from 'react'
 
 const Page: NextPage = () => {
   const { user: authUser } = useAuthContext()
   const { user } = useUserById(authUser?.uid || '')
   const { questionnaires } = useQuestionnaires()
-  const otherPeopleQuestionnaires = questionnaires.filter(
-    (questionnaire) => questionnaire.userId !== authUser?.uid
-  )
+  const [otherPeopleQuestionnaires, setOtherPeopleQuestionnaires] =
+    useState(questionnaires)
+  useEffect(() => {
+    setOtherPeopleQuestionnaires(
+      questionnaires.filter(
+        (questionnaire) => questionnaire.userId !== user?.id
+      )
+    )
+  }, [questionnaires, user])
 
   return (
     <>
