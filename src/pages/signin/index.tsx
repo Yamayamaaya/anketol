@@ -64,7 +64,7 @@ export const Page = () => {
         </Button>
         <Navigate href={(path) => path.signup.$url()}>
           <a className="mt-4 text-sm text-gray-500 underline">
-            サインアップはこちらから
+            初めての方はこちらから
           </a>
         </Navigate>
       </div>

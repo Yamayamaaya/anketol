@@ -1,21 +1,36 @@
-import { Button } from '@chakra-ui/react'
+import { Button, useToast } from '@chakra-ui/react'
 import {
   signInWithGoogle,
   saveUserToFirestore,
 } from '@src/lib/firebase/firebase'
 import Image from 'next/image'
 import { Navigate } from '@src/components/Navigate'
+import { useRouter } from '@src/hooks/hooks/useRouter'
 
 export const Page = () => {
+  const toast = useToast()
+  const { push } = useRouter()
+
   const handleGoogleSignUp = async () => {
     try {
       const userCredential = await signInWithGoogle()
       console.log(userCredential)
       if (userCredential?.user) {
         await saveUserToFirestore(userCredential.user)
+        toast({
+          title: 'サインアップしました。',
+          status: 'success',
+          position: 'top',
+        })
+        push((path) => path.$url())
       }
     } catch (e) {
       console.error('Firebase Authentication Error', e)
+      toast({
+        title: 'エラーが発生しました。',
+        status: 'error',
+        position: 'top',
+      })
     }
   }
 
@@ -48,7 +63,7 @@ export const Page = () => {
         {/* サインインはこちらから */}
         <Navigate href={(path) => path.signin.$url()}>
           <a className="mt-4 text-sm text-gray-500 underline">
-            サインインはこちらから
+            アカウントをお持ちの方はこちらから
           </a>
         </Navigate>
       </div>
