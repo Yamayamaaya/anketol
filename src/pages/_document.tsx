@@ -5,6 +5,7 @@ class MyDocument extends Document {
     return (
       <Html lang="ja" prefix="og: http://ogp.me/ns#">
         <Head>
+          <meta name="description" content="アンケートを、もっと手軽に" />
           <meta property="og:title" content="アンケトル" />
           <meta
             property="og:description"

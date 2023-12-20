@@ -19,7 +19,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>Anketol</title>
         <link rel="icon" href="/favicon.png " />
-        <meta name="description" content="アンケートを、もっと手軽に" />
       </Head>
       <ChakraProvider theme={theme}>
         <AuthProvider>
