@@ -3,7 +3,7 @@ import Document, { Html, Head, Main, NextScript } from 'next/document'
 class MyDocument extends Document {
   override render() {
     return (
-      <Html>
+      <Html lang="ja" prefix="og: http://ogp.me/ns#">
         <Head>
           <meta property="og:title" content="アンケトル" />
           <meta
