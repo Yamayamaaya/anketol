@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "run-p dev:* watch:*",
     "dev:next": "next dev",
-    "build": "run-s generate:path build:next",
+    "build": "next build && next export",
+    "export": "yarn build && serve ./out",
     "build:next": "next build",
     "start": "next start",
     "lint": "run-p lint:*",
