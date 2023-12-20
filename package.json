@@ -26,6 +26,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "firebase": "^10.7.1",
+    "firebase-tools": "^13.0.2",
     "framer-motion": "^7.5.4",
     "next": "13.1.2",
     "pathpida": "^0.18.1",
