@@ -5,8 +5,6 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <title>Anketol</title>
-          <link rel="icon" href="/favicon.png " />
           <meta property="og:title" content="アンケトル" />
           <meta
             property="og:description"
