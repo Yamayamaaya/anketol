@@ -1,4 +1,9 @@
 export const pagesPath = {
+  "doc": {
+    "privacyPolicy": {
+      $url: (url?: { hash?: string }) => ({ pathname: '/doc/privacyPolicy' as const, hash: url?.hash })
+    }
+  },
   "mypage": {
     $url: (url?: { hash?: string }) => ({ pathname: '/mypage' as const, hash: url?.hash })
   },

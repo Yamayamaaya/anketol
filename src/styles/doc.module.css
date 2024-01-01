@@ -1,0 +1,68 @@
+.markdownContainer h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0.2rem 0;
+}
+
+.markdownContainer h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 1em 0 0.83em 0;
+}
+
+.markdownContainer h3 {
+  font-size: 1.17rem;
+  font-weight: bold;
+  margin: 1em 0;
+}
+
+.markdownContainer h4 {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 1.33em 0;
+}
+
+.markdownContainer h5 {
+  font-size: 0.83rem;
+  font-weight: bold;
+  margin: 1.67em 0;
+}
+
+.markdownContainer h6 {
+  font-size: 0.67rem;
+  font-weight: bold;
+  margin: 2.33em 0;
+}
+
+.markdownContainer p {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 1em 0;
+  color: #000;
+  margin-left: 0.5rem;
+}
+
+.markdownContainer ul {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 1em 0;
+}
+
+.markdownContainer ol {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 1em 0;
+}
+
+.markdownContainer li {
+  font-size: 0.9rem;
+  line-height: 1.3;
+  margin: 0.5em 0;
+  margin-left: 1.5rem;
+}
+
+.markdownContainer blockquote {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 1em 0;
+}

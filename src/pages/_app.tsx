@@ -23,12 +23,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ChakraProvider theme={theme}>
         <AuthProvider>
           <Header isSignInOrUpPage={isSignInOrUpPage} />
-          <chakra.main
-            flex={1}
-            display={'flex'}
-            flexDirection={'column'}
-            height={0}
-          >
+          <chakra.main flex={1} display={'flex'} flexDirection={'column'}>
             <Component {...pageProps} />
           </chakra.main>
           <Footer isSignInOrUpPage={isSignInOrUpPage} />
