@@ -1,4 +1,4 @@
-import { MarkdownContainer } from '@src/components/MarkDownContainer'
+import { MarkdownContainer } from '@src/components/MarkdownContainer'
 
 const markdown = `
 # プライバシーポリシー
