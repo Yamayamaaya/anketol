@@ -1,5 +1,6 @@
 import { MarkdownContainer } from '@src/components/MarkdownContainer'
 import { useEffect, useState } from 'react'
+import Head from 'next/head'
 
 const PrivacyPolicy = () => {
   const [markdown, setMarkdown] = useState('')
@@ -12,7 +13,15 @@ const PrivacyPolicy = () => {
     }
     fetchMarkdown()
   }, [])
-  return <MarkdownContainer markdown={markdown} />
+  return (
+    <>
+      <Head>
+        <title>プライバシーポリシー</title>
+        <meta property="og:title" content="プライバシーポリシー" />
+      </Head>
+      <MarkdownContainer markdown={markdown} />
+    </>
+  )
 }
 
 export default PrivacyPolicy
