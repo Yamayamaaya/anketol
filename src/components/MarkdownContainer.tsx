@@ -9,7 +9,21 @@ type Props = {
 export const MarkdownContainer = ({ markdown }: Props) => {
   return (
     <div className={`${styles['markdownContainer']} m-6`}>
-      <ReactMarkdown>{markdown}</ReactMarkdown>
+      <ReactMarkdown
+        components={{
+          ul: ({ node, ...props }) => (
+            <ul style={{ listStyleType: 'disc' }} {...props} />
+          ),
+          ol: ({ node, ...props }) => (
+            <ol style={{ listStyleType: 'decimal' }} {...props} />
+          ),
+          li: ({ node, ...props }) => (
+            <li style={{ listStyle: 'inherit' }} {...props} />
+          ),
+        }}
+      >
+        {markdown}
+      </ReactMarkdown>
     </div>
   )
 }
