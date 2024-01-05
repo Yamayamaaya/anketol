@@ -3,6 +3,9 @@ export const pagesPath = {
     "PrivacyPolicy": {
       $url: (url?: { hash?: string }) => ({ pathname: '/doc/PrivacyPolicy' as const, hash: url?.hash })
     },
+    "SetUpAndHelp": {
+      $url: (url?: { hash?: string }) => ({ pathname: '/doc/SetUpAndHelp' as const, hash: url?.hash })
+    },
     "TermsOfUse": {
       $url: (url?: { hash?: string }) => ({ pathname: '/doc/TermsOfUse' as const, hash: url?.hash })
     }
