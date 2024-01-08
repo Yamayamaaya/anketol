@@ -27,8 +27,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <chakra.main flex={1} display={'flex'} flexDirection={'column'}>
             <Component {...pageProps} />
           </chakra.main>
-          {/* <Footer isSignInOrUpPage={isSignInOrUpPage} /> */}
-          {!isLp && <Footer isSignInOrUpPage={isSignInOrUpPage} />}
+          <Footer isSignInOrUpPage={isSignInOrUpPage} />
         </AuthProvider>
       </ChakraProvider>
     </>
