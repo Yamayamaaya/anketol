@@ -10,6 +10,9 @@ export const pagesPath = {
       $url: (url?: { hash?: string }) => ({ pathname: '/doc/TermsOfUse' as const, hash: url?.hash })
     }
   },
+  "lp": {
+    $url: (url?: { hash?: string }) => ({ pathname: '/lp' as const, hash: url?.hash })
+  },
   "mypage": {
     $url: (url?: { hash?: string }) => ({ pathname: '/mypage' as const, hash: url?.hash })
   },

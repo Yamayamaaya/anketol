@@ -13,6 +13,7 @@ initializeFirebaseApp()
 function MyApp({ Component, pageProps }: AppProps) {
   const { pathname } = useRouter()
   const isSignInOrUpPage = pathname === '/signin' || pathname === '/signup'
+  const isLp = pathname === '/lp'
 
   return (
     <>
@@ -22,11 +23,12 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <ChakraProvider theme={theme}>
         <AuthProvider>
-          <Header isSignInOrUpPage={isSignInOrUpPage} />
+          {!isLp && <Header isSignInOrUpPage={isSignInOrUpPage} />}
           <chakra.main flex={1} display={'flex'} flexDirection={'column'}>
             <Component {...pageProps} />
           </chakra.main>
-          <Footer isSignInOrUpPage={isSignInOrUpPage} />
+          {/* <Footer isSignInOrUpPage={isSignInOrUpPage} /> */}
+          {!isLp && <Footer isSignInOrUpPage={isSignInOrUpPage} />}
         </AuthProvider>
       </ChakraProvider>
     </>
