@@ -23,7 +23,7 @@ const LandingPage = () => {
           <div className="flex items-center justify-center bg-white rounded-3xl p-2 max-w-[405px] ">
             <div className="text-4xl font-bold p-2 pr-4 text-black">01</div>
             <div>
-              <p className="text-xl font-bold text-black md:text-2xl">
+              <p className="text-lg font-bold text-black md:text-2xl">
                 完全無料
               </p>
               <p className="text-sm pr-4">
@@ -34,7 +34,7 @@ const LandingPage = () => {
           <div className="flex items-center justify-center bg-white rounded-3xl p-2 max-w-[405px]">
             <div className="text-4xl font-bold p-2 pr-4 text-black">02</div>
             <div>
-              <p className="text-xl font-bold text-black md:text-2xl">
+              <p className="text-lg font-bold text-black md:text-2xl">
                 簡単登録
               </p>
               <p className="text-sm pr-4">
@@ -50,13 +50,13 @@ const LandingPage = () => {
           今すぐ始める ＞
         </button>
         <div className="w-full rounded-3xl h-full flex items-center bg-white flex-col pt-3 pb-6">
-          <p className="text-3xl font-bold my-3 text-black md:text-4xl">
-            使い方
+          <p className="text-2xl font-bold my-3 text-black md:text-4xl">
+            - 使い方 -
           </p>
-          <div className="w-full flex flex-col items-start justify-between px-[5%] gap-8">
+          <div className="w-full flex flex-col items-start justify-between px-[5%] gap-4 md:gap-8">
             <div className="flex items-start justify-center bg-white rounded-3xl p-2  flex-col md:flex-row  md:items-center">
-              <div className="text-3xl font-bold py-2 pr-4 text-black md:text-4xl">
-                <span className="text-2xl font-semibold pr-1 text-black md:text-3xl">
+              <div className="text-2xl font-bold md:py-2 pr-4 text-black md:text-4xl">
+                <span className="text-xl font-semibold pr-1 text-black md:text-3xl">
                   STEP
                 </span>
                 1
@@ -71,8 +71,8 @@ const LandingPage = () => {
               </div>
             </div>
             <div className="flex items-start justify-center bg-white rounded-3xl p-2  flex-col md:flex-row  md:items-center">
-              <div className="text-3xl font-bold py-2 pr-4 text-black md:text-4xl">
-                <span className="text-2xl font-semibold pr-1 text-black md:text-3xl">
+              <div className="text-2xl font-bold md:py-2 pr-4 text-black md:text-4xl">
+                <span className="text-xl font-semibold pr-1 text-black md:text-3xl">
                   STEP
                 </span>
                 2
@@ -87,8 +87,8 @@ const LandingPage = () => {
               </div>
             </div>
             <div className="flex items-start justify-center bg-white rounded-3xl p-2  flex-col md:flex-row  md:items-center">
-              <div className="text-3xl font-bold py-2 pr-4 text-black md:text-4xl">
-                <span className="text-2xl font-semibold pr-1 text-black md:text-3xl">
+              <div className="text-2xl font-bold md:py-2 pr-4 text-black md:text-4xl">
+                <span className="text-xl font-semibold pr-1 text-black md:text-3xl">
                   STEP
                 </span>
                 3
@@ -103,8 +103,8 @@ const LandingPage = () => {
               </div>
             </div>
             <div className="flex items-start justify-center bg-white rounded-3xl p-2  flex-col md:flex-row  md:items-center">
-              <div className="text-3xl font-bold py-2 pr-4 text-black md:text-4xl">
-                <span className="text-2xl font-semibold pr-1 text-black md:text-3xl">
+              <div className="text-2xl font-bold md:py-2 pr-4 text-black md:text-4xl">
+                <span className="text-xl font-semibold pr-1 text-black md:text-3xl">
                   STEP
                 </span>
                 4
