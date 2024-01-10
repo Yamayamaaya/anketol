@@ -29,7 +29,12 @@ export const TableItem = ({ questionnaire, index, user }: TableItemProps) => {
     <Tr key={index}>
       <Td>{questionnaire.title}</Td>
       <Td>
-        <a href={questionnaire.url} className="flex items-center">
+        <a
+          href={questionnaire.url}
+          className="flex items-center"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <span>回答する</span>
           <FontAwesomeIcon
             icon={faArrowUpRightFromSquare}
