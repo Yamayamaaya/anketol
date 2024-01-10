@@ -77,53 +77,33 @@ export const Page = () => {
         position: 'top',
       })
     }
-      const db = getFirestore()
-      const questionnairesCollection = collection(db, 'questionnaires')
-      if (user && id) {
-        const userId = user.uid
-        const docRef = doc(questionnairesCollection, id)
-        await setDoc(docRef, {
-          title: questionnaire.title,
-          expiry: questionnaire.expiry,
-          url: questionnaire.url,
-          editUrl: questionnaire.editUrl,
-          userId,
-          createdTime: new Date(),
-          updatedTime: new Date(),
-        })
-          .then(() => {
-            requestForGAS(id)
-          })
-          .then(() => {
-            activateQuestionnaire(id)
-          })
-        router.push('/') // Redirect to home page after successful submission
-      }
+  }
 
-      setQuestionnaire({
-        title: '',
-        url: '',
-        editUrl: '',
-        expiry: null,
-        active: false,
-      })
+  const saveQuestionnaireToDB = async (userId: string, id: string) => {
+    const db = getFirestore()
+    const questionnairesCollection = collection(db, 'questionnaires')
+    const docRef = doc(questionnairesCollection, id)
 
-      setInputError('')
-      toast({
-        title: '投稿しました。',
-        status: 'success',
-        position: 'top',
-      })
-    } catch (e) {
-      if (e instanceof FirebaseError) {
-        console.error('Firebase Error', e)
-        toast({
-          title: 'エラーが発生しました。',
-          status: 'error',
-          position: 'top',
-        })
-      }
-    }
+    await setDoc(docRef, {
+      title: questionnaire.title,
+      expiry: questionnaire.expiry,
+      url: questionnaire.url,
+      editUrl: questionnaire.editUrl,
+      userId,
+      createdTime: new Date(),
+      updatedTime: new Date(),
+    })
+  }
+
+  const resetForm = () => {
+    setQuestionnaire({
+      title: '',
+      url: '',
+      editUrl: '',
+      expiry: null,
+      active: false,
+    })
+    setInputError('')
   }
 
   const extractFormId = (editUrl: string) => {
