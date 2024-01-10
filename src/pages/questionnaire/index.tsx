@@ -2,7 +2,6 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { getFirestore, collection, doc, setDoc } from '@firebase/firestore'
-import { FirebaseError } from '@firebase/util'
 import {
   FormControl,
   FormLabel,
