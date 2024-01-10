@@ -110,7 +110,7 @@ export const ContactPage = () => {
               required
               my={1}
             />
-            <p className="text-sm self-start text-gray-500 ml-4 mb-2">
+            <p className="text-xs self-start text-gray-500 md:ml-4 mb-2 md:text-sm">
               ※返信をご希望の場合はこのメールアドレスに返信いたします
             </p>
             <label htmlFor="title" className="self-start mt-2 ml-1">
