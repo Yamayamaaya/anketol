@@ -5,6 +5,7 @@ export type Questionnaire = {
   id: string
   title: string
   url: string
+  editUrl: string
   expiry: Timestamp | null
   userId: string
   createdTime: Timestamp

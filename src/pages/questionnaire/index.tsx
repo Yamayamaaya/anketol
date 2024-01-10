@@ -19,15 +19,17 @@ import type { Questionnaire } from '@src/types/questionnaire'
 import { Timestamp } from 'firebase/firestore'
 import { useRouter } from 'next/router' // Added useRouter
 import { activateQuestionnaire } from '@src/feature/questionnaire/activateQuestionneaire'
+import { validateQuestionnaire as validate } from '@src/feature/questionnaire/validateQuestionnaire'
 import { requestForGAS } from '@src/feature/GAS/requestForGAS'
 
 // TODO: edit.tsxと共通化
 export const Page = () => {
   const [questionnaire, setQuestionnaire] = useState<
-    Pick<Questionnaire, 'title' | 'url' | 'expiry' | 'active'>
+    Pick<Questionnaire, 'title' | 'url' | 'editUrl' | 'expiry' | 'active'>
   >({
     title: '',
     url: '',
+    editUrl: '',
     expiry: null,
     active: false,
   })
@@ -39,13 +41,42 @@ export const Page = () => {
   const handleSendQuestionnaire = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const isValid = await varidate()
-    if (!isValid) {
+    const isValid = validate(questionnaire)
+    if (isValid !== '') {
+      setInputError(isValid)
       return
     }
-    const id = await extractFormId(questionnaire.url)
+
+    const id = await extractFormId(questionnaire.editUrl)
+    if (!user || !id) {
+      toast({
+        title: 'エラーが発生しました。',
+        status: 'error',
+        position: 'top',
+      })
+      return
+    }
 
     try {
+      await saveQuestionnaireToDB(user.uid, id)
+      await requestForGAS(id)
+      await activateQuestionnaire(id)
+
+      resetForm()
+      toast({
+        title: '投稿しました。',
+        status: 'success',
+        position: 'top',
+      })
+      router.push('/') // Redirect to home page after successful submission
+    } catch (e) {
+      console.error('Firebase Error', e)
+      toast({
+        title: 'エラーが発生しました。',
+        status: 'error',
+        position: 'top',
+      })
+    }
       const db = getFirestore()
       const questionnairesCollection = collection(db, 'questionnaires')
       if (user && id) {
@@ -55,6 +86,7 @@ export const Page = () => {
           title: questionnaire.title,
           expiry: questionnaire.expiry,
           url: questionnaire.url,
+          editUrl: questionnaire.editUrl,
           userId,
           createdTime: new Date(),
           updatedTime: new Date(),
@@ -71,9 +103,11 @@ export const Page = () => {
       setQuestionnaire({
         title: '',
         url: '',
+        editUrl: '',
         expiry: null,
         active: false,
       })
+
       setInputError('')
       toast({
         title: '投稿しました。',
@@ -92,35 +126,13 @@ export const Page = () => {
     }
   }
 
-  const varidate = () => {
-    if (questionnaire.title === '') {
-      setInputError('タイトルを入力してください')
-      return false
+  const extractFormId = (editUrl: string) => {
+    const formId = editUrl.split('/')[5]
+    if (formId) {
+      return formId
+    } else {
+      return null
     }
-    if (questionnaire.expiry === null) {
-      setInputError('有効期限を入力してください')
-      return false
-    }
-    if (questionnaire.url === '') {
-      setInputError('URLを入力してください')
-      return false
-    } else if (
-      // https://docs.google.com/forms/d/e/[FORM_ID]/viewformの形式であるか
-      !questionnaire.url.match(
-        /^https:\/\/docs.google.com\/forms\/d\/e\/.+\/viewform$/
-      ) &&
-      !!questionnaire.url.split('/')[6]
-    ) {
-      setInputError('URLが正しくありません')
-      return false
-    }
-
-    return true
-  }
-
-  const extractFormId = (url: string) => {
-    const formId = url.split('/')[6]
-    return formId
   }
 
   return (
@@ -162,10 +174,21 @@ export const Page = () => {
           <FormLabel className="pt-3">URL</FormLabel>
           <Input
             type="text"
-            placeholder="googleフォームのURL"
+            placeholder="googleフォームURL(回答用)"
             value={questionnaire.url}
             onChange={(e) =>
               setQuestionnaire({ ...questionnaire, url: e.target.value })
+            }
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel className="pt-3">URL</FormLabel>
+          <Input
+            type="text"
+            placeholder="googleフォームURL(編集用)"
+            value={questionnaire.editUrl}
+            onChange={(e) =>
+              setQuestionnaire({ ...questionnaire, editUrl: e.target.value })
             }
           />
         </FormControl>
