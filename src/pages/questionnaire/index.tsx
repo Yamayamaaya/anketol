@@ -16,7 +16,6 @@ import 'tailwindcss/tailwind.css'
 import { useAuthContext } from '@src/feature/auth/provider/AuthProvider'
 import type { Questionnaire } from '@src/types/questionnaire'
 import { Timestamp } from 'firebase/firestore'
-import { useRouter } from 'next/router' // Added useRouter
 import { activateQuestionnaire } from '@src/feature/questionnaire/activateQuestionneaire'
 import { validateQuestionnaire as validate } from '@src/feature/questionnaire/validateQuestionnaire'
 import { requestForGAS } from '@src/feature/GAS/requestForGAS'
@@ -34,7 +33,6 @@ export const Page = () => {
   })
   const [inputError, setInputError] = useState<string>('')
   const { user } = useAuthContext()
-  const router = useRouter()
   const toast = useToast()
 
   const handleSendQuestionnaire = async (e: FormEvent<HTMLFormElement>) => {
