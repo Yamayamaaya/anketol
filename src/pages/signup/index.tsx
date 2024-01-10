@@ -59,7 +59,6 @@ export const Page = () => {
           />
           <p>Googleでサインアップ</p>
         </Button>
-        {/* サインインはこちらから */}
         <Navigate href={(path) => path.signin.$url()}>
           <a className="mt-4 text-sm text-gray-500 underline">
             アカウントをお持ちの方はこちらから

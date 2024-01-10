@@ -71,3 +71,8 @@
   line-height: 1.5;
   margin: 1em 0;
 }
+
+.markdownContainer a {
+  color: #0543b6;
+  text-decoration: underline;
+}
