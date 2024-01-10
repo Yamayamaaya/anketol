@@ -47,7 +47,7 @@ export const ContactPage = () => {
     })
       .catch((error: FirebaseError) => {
         toast({
-          title: 'お問い合わせに失敗しました',
+          title: 'エラーが発生しました。',
           description: error.message,
           status: 'error',
           position: 'top',
