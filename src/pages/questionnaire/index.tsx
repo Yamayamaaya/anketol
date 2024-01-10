@@ -55,11 +55,12 @@ export const Page = () => {
       })
       return
     }
-
     try {
       await saveQuestionnaireToDB(user.uid, id)
-      await requestForGAS(id)
       await activateQuestionnaire(id)
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      await requestForGAS(id)
+      await new Promise((resolve) => setTimeout(resolve, 1000))
 
       resetForm()
       toast({
@@ -67,7 +68,6 @@ export const Page = () => {
         status: 'success',
         position: 'top',
       })
-      router.push('/') // Redirect to home page after successful submission
     } catch (e) {
       console.error('Firebase Error', e)
       toast({
