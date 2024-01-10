@@ -74,6 +74,7 @@ export const Header: React.FC<HeaderProps> = ({ isSignInOrUpPage }) => {
               <Image
                 src={'/logo_reverse.svg'}
                 alt={'アンケトル'}
+                className="w-36 md:w-[200px]"
                 width={200}
                 height={50}
               />

@@ -19,6 +19,7 @@ import type { Questionnaire } from '@src/types/questionnaire'
 import { Timestamp } from 'firebase/firestore'
 import { useRouter } from 'next/router' // Added useRouter
 import { activateQuestionnaire } from '@src/feature/questionnaire/activateQuestionneaire'
+import { requestForGAS } from '@src/feature/GAS/requestForGAS'
 
 // TODO: edit.tsxと共通化
 export const Page = () => {
@@ -57,9 +58,13 @@ export const Page = () => {
           userId,
           createdTime: new Date(),
           updatedTime: new Date(),
-        }).then(() => {
-          activateQuestionnaire(id)
         })
+          .then(() => {
+            requestForGAS(id)
+          })
+          .then(() => {
+            activateQuestionnaire(id)
+          })
         router.push('/') // Redirect to home page after successful submission
       }
 
@@ -120,9 +125,10 @@ export const Page = () => {
 
   return (
     <div className="flex flex-col items-center py-2">
+      <h1 className="text-2xl font-bold my-4">アンケート投稿</h1>
       <form
         onSubmit={handleSendQuestionnaire}
-        className="p-6 mt-6 text-left border w-96 rounded-xl shadow-xl bg-white"
+        className="p-6 text-left border w-80 md:w-96 rounded-xl shadow-xl bg-white flex flex-col "
       >
         <FormControl>
           <FormLabel>タイトル</FormLabel>
@@ -148,7 +154,7 @@ export const Page = () => {
               })
             }
             placeholderText="有効期限"
-            className="border border-gray-200 rounded-md w-[20.8rem] py-2 pl-2"
+            className="border border-gray-200 rounded-md  w-[270px] md:w-[20.8rem] py-2 pl-2"
           />
           {/* FIXME:デザインゴリ押しすぎ */}
         </FormControl>
@@ -182,7 +188,14 @@ export const Page = () => {
             <></>
           )}
         </FormControl>
-        <Button type="submit" className="mt-6">
+        <Button
+          type="submit"
+          px={16}
+          py={0}
+          colorScheme="blue"
+          className="mt-6 self-center"
+          size="sm"
+        >
           投稿
         </Button>
       </form>
