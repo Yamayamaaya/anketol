@@ -38,7 +38,7 @@ export const Header: React.FC<HeaderProps> = ({ isSignInOrUpPage }) => {
       const auth = getAuth()
       await signOut(auth)
       toast({
-        title: 'ログアウトしました。',
+        title: 'サインアウトしました。',
         status: 'success',
         position: 'top',
       })

@@ -17,7 +17,7 @@ export const Page = () => {
     try {
       await signInWithGoogle()
       toast({
-        title: 'ログインしました。',
+        title: 'サインインしました。',
         status: 'success',
         position: 'top',
       })
