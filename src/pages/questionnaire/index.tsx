@@ -19,7 +19,6 @@ import { Timestamp } from 'firebase/firestore'
 import { useRouter } from 'next/router' // Added useRouter
 import { activateQuestionnaire } from '@src/feature/questionnaire/activateQuestionneaire'
 import { validateQuestionnaire as validate } from '@src/feature/questionnaire/validateQuestionnaire'
-import { requestForGAS } from '@src/feature/GAS/requestForGAS'
 
 // TODO: edit.tsxと共通化
 export const Page = () => {
