@@ -2,7 +2,7 @@ import { Button, useToast } from '@chakra-ui/react'
 import { useState } from 'react'
 import { FirebaseError } from '@firebase/util'
 import { useRouter } from '@src/hooks/hooks/useRouter'
-import { signInWithGoogle } from '@src/lib/firebase/firebase'
+import { useSignInWithGoogle } from '@src/hooks/firebase/useSignInWithGoogle'
 import Image from 'next/image'
 import { Navigate } from '@src/components/Navigate'
 
@@ -10,6 +10,7 @@ export const Page = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const toast = useToast()
   const { push } = useRouter()
+  const signInWithGoogle = useSignInWithGoogle()
 
   const handleGoogleSignIn = async () => {
     setIsLoading(true)

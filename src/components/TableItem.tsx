@@ -1,11 +1,11 @@
 import { Avatar, Badge, Td, Tr } from '@chakra-ui/react'
 import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useUserById } from '@src/hooks/hooks/useUser'
+import { useUserById } from '@src/hooks/firestoreDocument/useUser'
 import { useEffect } from 'react'
 import type { Questionnaire } from '@src/types/questionnaire'
 import type { User } from '@src/types/user'
-import { useAnswerLogsByRespondentGmail } from '@src/hooks/hooks/useAnswerLog'
+import { useAnswerLogsByRespondentGmail } from '@src/hooks/firestoreDocument/useAnswerLog'
 
 interface TableItemProps {
   questionnaire: Questionnaire

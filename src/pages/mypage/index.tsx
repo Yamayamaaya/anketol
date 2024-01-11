@@ -17,8 +17,8 @@ import {
 import { useAuthContext } from '@src/feature/auth/provider/AuthProvider'
 import type { User } from '@src/types/user'
 import { useState } from 'react'
-import { useUserById } from '@src/hooks/hooks/useUser'
-import { useQuestionnaireByUserId } from '@src/hooks/hooks/useQuestionnaire'
+import { useUserById } from '@src/hooks/firestoreDocument/useUser'
+import { useQuestionnaireByUserId } from '@src/hooks/firestoreDocument/useQuestionnaire'
 import type { Questionnaire } from '@src/types/questionnaire'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {

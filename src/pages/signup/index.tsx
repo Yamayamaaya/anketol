@@ -1,8 +1,5 @@
 import { Button, useToast } from '@chakra-ui/react'
-import {
-  signInWithGoogle,
-  saveUserToFirestore,
-} from '@src/lib/firebase/firebase'
+import { useSignInWithGoogle } from '@src/hooks/firebase/useSignInWithGoogle'
 import Image from 'next/image'
 import { Navigate } from '@src/components/Navigate'
 import { useRouter } from '@src/hooks/hooks/useRouter'
@@ -10,12 +7,12 @@ import { useRouter } from '@src/hooks/hooks/useRouter'
 export const Page = () => {
   const toast = useToast()
   const { push } = useRouter()
+  const signInWithGoogle = useSignInWithGoogle()
 
   const handleGoogleSignUp = async () => {
     try {
       const userCredential = await signInWithGoogle()
       if (userCredential?.user) {
-        await saveUserToFirestore(userCredential.user)
         toast({
           title: 'サインアップしました。',
           status: 'success',
