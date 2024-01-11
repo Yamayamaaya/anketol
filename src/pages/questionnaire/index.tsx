@@ -16,6 +16,7 @@ import 'tailwindcss/tailwind.css'
 import { useAuthContext } from '@src/feature/auth/provider/AuthProvider'
 import type { Questionnaire } from '@src/types/questionnaire'
 import { Timestamp } from 'firebase/firestore'
+import { useRouter } from 'next/router' // Added useRouter
 import { activateQuestionnaire } from '@src/feature/questionnaire/activateQuestionneaire'
 import { validateQuestionnaire as validate } from '@src/feature/questionnaire/validateQuestionnaire'
 import { requestForGAS } from '@src/feature/GAS/requestForGAS'
@@ -33,6 +34,7 @@ export const Page = () => {
   })
   const [inputError, setInputError] = useState<string>('')
   const { user } = useAuthContext()
+  const router = useRouter()
   const toast = useToast()
 
   const handleSendQuestionnaire = async (e: FormEvent<HTMLFormElement>) => {
@@ -56,9 +58,6 @@ export const Page = () => {
     try {
       await saveQuestionnaireToDB(user.uid, id)
       await activateQuestionnaire(id)
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      await requestForGAS(id)
-      await new Promise((resolve) => setTimeout(resolve, 1000))
 
       resetForm()
       toast({
@@ -66,6 +65,7 @@ export const Page = () => {
         status: 'success',
         position: 'top',
       })
+      router.push('/doc/SetUpAndHelp')
     } catch (e) {
       console.error('Firebase Error', e)
       toast({
@@ -89,6 +89,7 @@ export const Page = () => {
       userId,
       createdTime: new Date(),
       updatedTime: new Date(),
+      isAuthenticated: false,
     })
   }
 

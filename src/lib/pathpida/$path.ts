@@ -22,9 +22,6 @@ export const pagesPath = {
         $url: (url?: { hash?: string }) => ({ pathname: '/questionnaire/edit/[id]' as const, query: { id }, hash: url?.hash })
       })
     },
-    "success": {
-      $url: (url?: { hash?: string }) => ({ pathname: '/questionnaire/success' as const, hash: url?.hash })
-    },
     $url: (url?: { hash?: string }) => ({ pathname: '/questionnaire' as const, hash: url?.hash })
   },
   "signin": {

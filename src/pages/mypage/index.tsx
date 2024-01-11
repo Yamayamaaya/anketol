@@ -22,6 +22,7 @@ import { useQuestionnaireByUserId } from '@src/hooks/hooks/useQuestionnaire'
 import type { Questionnaire } from '@src/types/questionnaire'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
+  faArrowUpRightFromSquare,
   faFile,
   faPenToSquare,
   faTrash,
@@ -30,6 +31,7 @@ import {
 import { useRouter } from 'next/router'
 import { getFirestore, doc, deleteDoc } from 'firebase/firestore'
 import { activateQuestionnaire } from '@src/feature/questionnaire/activateQuestionneaire'
+import { requestForGAS } from '@src/feature/GAS/requestForGAS'
 
 export const Page = () => {
   const { user: authUser } = useAuthContext()
@@ -178,6 +180,7 @@ const PostedTab = (
             <Th>有効</Th>
             <Th>タイトル</Th>
             <Th>認証</Th>
+            <Th></Th>
             <Th>有効期限</Th>
             <Th>URL</Th>
           </Tr>
@@ -220,6 +223,23 @@ const PostedTab = (
                   <Badge colorScheme="green">認証済</Badge>
                 ) : (
                   <Badge colorScheme="red">未認証</Badge>
+                )}
+              </Td>
+              <Td>
+                {questionnaire.isAuthenticated ? (
+                  <></>
+                ) : (
+                  <button
+                    onClick={() => requestForGAS(questionnaire.id)}
+                    className="flex items-center"
+                  >
+                    <span>認証する</span>
+                    <FontAwesomeIcon
+                      icon={faArrowUpRightFromSquare}
+                      size="xs"
+                      className="w-3 h-3 ml-1"
+                    />
+                  </button>
                 )}
               </Td>
 
