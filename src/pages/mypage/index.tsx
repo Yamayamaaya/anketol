@@ -32,6 +32,7 @@ import { useRouter } from 'next/router'
 import { getFirestore, doc, deleteDoc } from 'firebase/firestore'
 import { activateQuestionnaire } from '@src/feature/questionnaire/activateQuestionneaire'
 import { requestForGAS } from '@src/feature/GAS/requestForGAS'
+import { CardItem } from '@src/components/CardItem'
 
 export const Page = () => {
   const { user: authUser } = useAuthContext()
@@ -98,9 +99,9 @@ export const Page = () => {
           </div>
         </div>
       </div>
-      <div className="w-3/4 h-screen">
+      <div className="w-3/4 h-screen p-12">
         {selectedTab === 'profile' && ProfileTab(user)}
-        {selectedTab === 'posted' && PostedTab(questionnaires, toast, router)}
+        {selectedTab === 'posted' && PostedTab(questionnaires, user)}
         {/* {selectedTab === 'answered' && <div>回答済みアンケート</div>}
         {selectedTab === 'signout' && <div>サインアウト</div>} */}
       </div>
@@ -112,7 +113,7 @@ export default Page
 
 const ProfileTab = (user: User) => {
   return (
-    <TableContainer className="p-12">
+    <TableContainer>
       <p className="text-2xl font-bold">プロフィール</p>
       <Table variant="simple" className="mt-8">
         <Thead>
@@ -136,119 +137,19 @@ const ProfileTab = (user: User) => {
   )
 }
 
-const PostedTab = (
-  questionnaires: Questionnaire[],
-  toast: any,
-  router: any
-) => {
-  const handleDeleteQuestionnaire = async (questionnaireId: string) => {
-    const db = getFirestore()
-    const docRef = doc(db, 'questionnaires', questionnaireId)
-    await deleteDoc(docRef)
-    toast({
-      title: '削除しました。',
-      status: 'success',
-      position: 'top',
-    })
-    router.reload()
-  }
-
-  const handleEditQuestionnaire = async (questionnaireId: string) => {
-    router.push(`/questionnaire/edit/${questionnaireId}`)
-  }
-
-  const onChangeActive = async (questionnaireId: string) => {
-    await activateQuestionnaire(questionnaireId)
-    toast({
-      title: '更新しました。',
-      status: 'success',
-      position: 'top',
-    })
-    setTimeout(() => {
-      router.reload()
-    }, 200)
-  }
-  // リロードはせず、再レンダリングする
-
+const PostedTab = (questionnaires: Questionnaire[], user: User) => {
   return (
-    <TableContainer className="px-4 pt-12">
-      <p className="text-2xl font-bold fixed">投稿済みアンケート</p>
-      <Table variant="simple" className="mt-16 w-full overflow-x-auto">
-        <Thead>
-          <Tr>
-            <Th> </Th>
-            <Th>有効</Th>
-            <Th>タイトル</Th>
-            <Th>認証</Th>
-            <Th></Th>
-            <Th>有効期限</Th>
-            <Th>URL</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {questionnaires.map((questionnaire, index) => (
-            <Tr key={index}>
-              <Td>
-                <button
-                  onClick={() => handleEditQuestionnaire(questionnaire.id)}
-                >
-                  <FontAwesomeIcon
-                    icon={faPenToSquare}
-                    size="xs"
-                    className="h-3 w-3 mr-2"
-                  />
-                </button>
-                <button
-                  onClick={() => handleDeleteQuestionnaire(questionnaire.id)}
-                >
-                  <FontAwesomeIcon
-                    icon={faTrash}
-                    size="xs"
-                    className="h-3 w-3 ml-2"
-                  />
-                </button>
-              </Td>
-              <Td>
-                <Radio
-                  size="md"
-                  name="1"
-                  colorScheme="green"
-                  defaultChecked={questionnaire.active}
-                  onChange={() => onChangeActive(questionnaire.id)}
-                ></Radio>
-              </Td>
-              <Td>{questionnaire.title}</Td>
-              <Td>
-                {questionnaire.isAuthenticated ? (
-                  <Badge colorScheme="green">認証済</Badge>
-                ) : (
-                  <Badge colorScheme="red">未認証</Badge>
-                )}
-              </Td>
-              <Td>
-                {questionnaire.isAuthenticated ? (
-                  <></>
-                ) : (
-                  <button
-                    onClick={() => requestForGAS(questionnaire.id)}
-                    className="flex items-center"
-                  >
-                    <span>認証する</span>
-                    <FontAwesomeIcon
-                      icon={faArrowUpRightFromSquare}
-                      size="xs"
-                      className="w-3 h-3 ml-1"
-                    />
-                  </button>
-                )}
-              </Td>
-
-              <Td>{questionnaire.expiry?.toDate().toLocaleDateString()}</Td>
-              <Td className="text-xs">{questionnaire.url}</Td>
-            </Tr>
-          ))}
-        </Tbody>
-      </Table>
-    </TableContainer>
+    <div className="mx-auto">
+      <p className="text-2xl font-bold">投稿済みアンケート</p>
+      <div className="flex flex-col items-center justify-center gap-2 m-4">
+        {questionnaires.map((questionnaire) => (
+          <CardItem
+            key={questionnaire.id}
+            questionnaire={questionnaire}
+            user={user}
+          />
+        ))}
+      </div>
+    </div>
   )
 }

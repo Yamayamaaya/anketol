@@ -7,7 +7,7 @@ import { CardItem } from '@src/components/CardItem'
 
 const Page: NextPage = () => {
   const { user: authUser } = useAuthContext()
-  const { user } = useUserById(authUser?.uid || '')
+  const { user } = useUserById(authUser?.uid)
   const { questionnaires } = useQuestionnaires()
   const [otherPeopleQuestionnaires, setOtherPeopleQuestionnaires] =
     useState(questionnaires)
@@ -20,15 +20,17 @@ const Page: NextPage = () => {
   }, [questionnaires, user])
 
   return (
-    <div className="w-3/5 my-8 max-w-[530px] mx-auto">
-      {otherPeopleQuestionnaires.map((questionnaire, index) => (
-        <CardItem
-          questionnaire={questionnaire}
-          index={index}
-          key={index}
-          user={user || undefined}
-        />
-      ))}
+    <div className="flex flex-col items-center justify-center gap-4">
+      <h1 className="text-2xl font-bold my-8">アンケート一覧</h1>
+      <div className="md:w-3/5 flex flex-col items-center justify-center gap-4 max-w-[530px]">
+        {otherPeopleQuestionnaires.map((questionnaire, index) => (
+          <CardItem
+            questionnaire={questionnaire}
+            key={index}
+            user={user || undefined}
+          />
+        ))}
+      </div>
     </div>
   )
 }
