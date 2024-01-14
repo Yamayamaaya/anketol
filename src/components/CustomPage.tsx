@@ -1,17 +1,33 @@
 import Head from 'next/head'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useAuthContext } from '@src/feature/auth/provider/AuthProvider'
+import { useUserById } from '@src/hooks/firestoreDocument/useUser'
+import { useRouter } from 'next/router'
 
 type PageProps = {
   title: string
   children: React.ReactNode
   isSetUpOGP?: boolean
+  isAuthPage?: boolean
 }
 
 const CustomPage: React.FC<PageProps> = ({
   title,
   children,
   isSetUpOGP = true,
+  isAuthPage = false,
 }) => {
+  const { user: authUser } = useAuthContext()
+  const { user } = useUserById(authUser?.uid)
+
+  const { push } = useRouter()
+
+  useEffect(() => {
+    if (isAuthPage && !user) {
+      push('/signin')
+    }
+  }, [isAuthPage, user, push])
+
   return (
     <>
       {isSetUpOGP && (
