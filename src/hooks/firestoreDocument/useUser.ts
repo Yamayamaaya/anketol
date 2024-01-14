@@ -8,12 +8,16 @@ export const useUserById = (id?: string) => {
   const [error, setError] = useState<Error | null>(null)
 
   useEffect(() => {
-    if (!id) return
+    if (!id) {
+      setLoading(false)
+      return
+    }
     const fetchUser = async () => {
       try {
         const db = getFirestore()
         const userDocRef = doc(db, 'users', id)
         const userDoc = await getDoc(userDocRef)
+        console.log('userDoc', userDoc)
         if (!userDoc.exists) {
           setUser(null)
         } else {
@@ -29,7 +33,6 @@ export const useUserById = (id?: string) => {
         setLoading(false)
       }
     }
-
     fetchUser()
   }, [id])
 
