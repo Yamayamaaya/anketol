@@ -10,9 +10,6 @@ import {
   TableContainer,
   Avatar,
   Divider,
-  useToast,
-  Badge,
-  Radio,
 } from '@chakra-ui/react'
 import { useAuthContext } from '@src/feature/auth/provider/AuthProvider'
 import type { User } from '@src/types/user'
@@ -21,17 +18,7 @@ import { useUserById } from '@src/hooks/firestoreDocument/useUser'
 import { useQuestionnaireByUserId } from '@src/hooks/firestoreDocument/useQuestionnaire'
 import type { Questionnaire } from '@src/types/questionnaire'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faArrowUpRightFromSquare,
-  faFile,
-  faPenToSquare,
-  faTrash,
-  faUser,
-} from '@fortawesome/free-solid-svg-icons'
-import { useRouter } from 'next/router'
-import { getFirestore, doc, deleteDoc } from 'firebase/firestore'
-import { activateQuestionnaire } from '@src/feature/questionnaire/activateQuestionneaire'
-import { requestForGAS } from '@src/feature/GAS/requestForGAS'
+import { faFile, faUser } from '@fortawesome/free-solid-svg-icons'
 import { CardItem } from '@src/components/CardItem'
 
 export const Page = () => {
@@ -39,8 +26,6 @@ export const Page = () => {
   const { user } = useUserById(authUser?.uid)
   const { questionnaires } = useQuestionnaireByUserId(user?.id)
   const [selectedTab, setSelectedTab] = useState('profile')
-  const toast = useToast()
-  const router = useRouter()
 
   if (!user) {
     return <Box>ログインしていません</Box>

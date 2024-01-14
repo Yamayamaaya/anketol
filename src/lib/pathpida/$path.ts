@@ -14,6 +14,12 @@ export const pagesPath = {
     $url: (url?: { hash?: string }) => ({ pathname: '/lp' as const, hash: url?.hash })
   },
   "mypage": {
+    "posted": {
+      $url: (url?: { hash?: string }) => ({ pathname: '/mypage/posted' as const, hash: url?.hash })
+    },
+    "profile": {
+      $url: (url?: { hash?: string }) => ({ pathname: '/mypage/profile' as const, hash: url?.hash })
+    },
     $url: (url?: { hash?: string }) => ({ pathname: '/mypage' as const, hash: url?.hash })
   },
   "questionnaire": {
