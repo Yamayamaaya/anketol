@@ -7,12 +7,8 @@ import {
   Th,
   Td,
   TableContainer,
-  Avatar,
-  Divider,
 } from '@chakra-ui/react'
 import { useAuthContext } from '@src/feature/auth/provider/AuthProvider'
-import type { User } from '@src/types/user'
-import { useState } from 'react'
 import { useUserById } from '@src/hooks/firestoreDocument/useUser'
 
 export const ProfilePage = () => {

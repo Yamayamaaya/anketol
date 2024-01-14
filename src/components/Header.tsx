@@ -6,6 +6,7 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
+  MenuGroup,
   useToast,
   Drawer,
   DrawerOverlay,
@@ -13,6 +14,7 @@ import {
   DrawerCloseButton,
   DrawerHeader,
   DrawerBody,
+  Divider,
 } from '@chakra-ui/react'
 import { useAuthContext } from '@src/feature/auth/provider/AuthProvider'
 import { getAuth, signOut } from 'firebase/auth'
@@ -97,10 +99,30 @@ export const Header: React.FC<HeaderProps> = ({ isSignInOrUpPage }) => {
                 {user?.displayName}
               </h4>
               <MenuDivider />
-              <MenuItem onClick={handleSignOut}>サインアウト</MenuItem>
-              <MenuItem onClick={() => push((path) => path.mypage.$url())}>
-                マイページ
-              </MenuItem>
+              <MenuGroup title="マイページ">
+                <MenuItem
+                  onClick={() => push((path) => path.mypage.profile.$url())}
+                  className="text-sm"
+                >
+                  プロフィール
+                </MenuItem>
+                <MenuItem
+                  onClick={() => push((path) => path.mypage.posted.$url())}
+                  className="text-sm"
+                >
+                  投稿済みアンケート
+                </MenuItem>
+              </MenuGroup>
+              <MenuDivider />
+              <MenuGroup title="アカウント">
+                <MenuItem
+                  onClick={handleSignOut}
+                  className="text-sm"
+                  cursor={'pointer'}
+                >
+                  サインアウト
+                </MenuItem>
+              </MenuGroup>
             </MenuList>
           </Menu>
         ) : (
@@ -141,13 +163,19 @@ export const Header: React.FC<HeaderProps> = ({ isSignInOrUpPage }) => {
                 アンケート投稿
               </p>
             </Navigate>
-            <Navigate href={(path) => path.mypage.$url()}>
-              <p className="text-gray-700 hover:text-black hover:font-semibold">
-                マイページ
+            <Divider />
+            <p className="text-gray-700">マイページ</p>
+            <Navigate href={(path) => path.mypage.profile.$url()}>
+              <p className="text-gray-700 hover:text-black text-base hover:font-semibold -mt-2 ml-3">
+                プロフィール
+              </p>
+            </Navigate>
+            <Navigate href={(path) => path.mypage.posted.$url()}>
+              <p className="text-gray-700 hover:text-black text-base hover:font-semibold -mt-2 ml-3">
+                投稿済みアンケート
               </p>
             </Navigate>
           </DrawerBody>
-          {/* Add the content of the drawer here */}
         </DrawerContent>
       </Drawer>
     </chakra.header>

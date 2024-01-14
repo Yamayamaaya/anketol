@@ -138,7 +138,7 @@ export const CardItem = ({ questionnaire, user }: CardProps) => {
             ) : (
               <button
                 onClick={() => requestForGAS(questionnaire.id)}
-                className="flex items-center bg-blue-500 text-white rounded-md px-2 py-1 mr-2 font-semibold  text-sm md:text-base"
+                className="flex items-center bg-blue-500 text-white rounded-md px-2 py-1 mr-2 font-semibold  text-xs md:text-sm"
               >
                 <span>認証する</span>
                 <FontAwesomeIcon
@@ -180,7 +180,7 @@ export const CardItem = ({ questionnaire, user }: CardProps) => {
       <CardBody display="flex" alignItems="center" p={2}>
         {isOwnQuestionnaire && (
           <TableContainer>
-            <Table size="sm">
+            <Table size="sm" overflowX="hidden">
               <Thead>
                 <Tr></Tr>
               </Thead>
