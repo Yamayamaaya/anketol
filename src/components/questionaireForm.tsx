@@ -12,8 +12,16 @@ import { Timestamp } from 'firebase/firestore'
 import type { Questionnaire } from '@src/types/questionnaire'
 
 type Props = {
-  questionnaire: Questionnaire
-  setQuestionnaire: (questionnaire: Questionnaire) => void
+  questionnaire: Pick<
+    Questionnaire,
+    'title' | 'url' | 'editUrl' | 'expiry' | 'active'
+  >
+  setQuestionnaire: (
+    questionnaire: Pick<
+      Questionnaire,
+      'title' | 'url' | 'editUrl' | 'expiry' | 'active'
+    >
+  ) => void
   onSubmit: (e: FormEvent<HTMLFormElement>) => void
   inputError: string
 }
