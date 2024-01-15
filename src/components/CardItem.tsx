@@ -97,6 +97,7 @@ export const CardItem = ({ questionnaire, user }: CardProps) => {
         borderRadius="md"
         display="flex"
         justifyContent="space-between"
+        alignItems="center"
       >
         <div className="flex items-center">
           <span className="ml-2 font-bold text-sm md:text-base">
@@ -169,6 +170,10 @@ export const CardItem = ({ questionnaire, user }: CardProps) => {
               />
             </button>
           </div>
+        ) : isAnswered ? (
+          <p className="text-xs md:text-sm">
+            回答日時：{answerLogs[0]?.createdTime.toDate().toLocaleString()}
+          </p>
         ) : (
           <button
             onClick={() => window.open(questionnaire.url, '_blank')}
