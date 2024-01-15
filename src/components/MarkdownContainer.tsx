@@ -8,7 +8,7 @@ type Props = {
 
 export const MarkdownContainer = ({ markdown }: Props) => {
   return (
-    <div className={`${styles['markdownContainer']} m-6`}>
+    <div className={`${styles['markdownContainer']} m-8 md:m-12`}>
       <ReactMarkdown
         components={{
           ul: ({ node, ...props }) => (
