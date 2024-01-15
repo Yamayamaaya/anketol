@@ -31,19 +31,30 @@ export const Page = () => {
   }
 
   return (
-    <div className="w-[100%] flex items-center overflow-y-hidden">
+    <div className="w-[100%] flex  flex-col md:flex-row items-center h-[calc(100vh-110px)] overflow-y-hidden">
       <div
-        className="w-2/5 h-screen flex items-center justify-center bg-cover bg-center"
+        className="w-[100%] bg-cover absolute  h-[calc(100vh-110px)] overflow-y-hidden md:hidden block z-[-1]"
         style={{ backgroundImage: `url("/theme.png")` }}
       ></div>
-      <div className="w-3/5 h-full flex flex-col items-center justify-center">
-        <h3 className="text-xl mb-3">アンケートを、もっと手軽に</h3>
+      <div
+        className="w-full md:w-2/5 h-2/5 md:h-full flex items-center justify-center bg-cover bg-center z-[-2]"
+        style={{ backgroundImage: `url("/theme.png")` }}
+      ></div>
+      <div className="md:w-3/5 md:h-full rounded-lg shadow-xl flex h-1/3 w-4/5 flex-col items-center  justify-center bg-white">
+        <h3 className="md:text-xl text-sm mb-3 ">アンケートを、もっと手軽に</h3>
         <Image
           src="/logo.svg"
-          width="400"
+          width="380"
           height="50"
           alt="アンケトル"
-          className="mb-20"
+          className="mb-20 md:block hidden"
+        />
+        <Image
+          src="/logo.svg"
+          width="200"
+          height="50"
+          alt="アンケトル"
+          className="md:mb-20 mb-8 md:hidden block"
         />
         <Button
           onClick={handleGoogleSignUp}
@@ -53,15 +64,26 @@ export const Page = () => {
             src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
             width="20"
             height="20"
+            className="md:block hidden"
           />
-          <p>Googleでサインアップ</p>
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
+            width="15"
+            height="15"
+            className="md:hidden block"
+          />
+          <p className="text-sm md:text-base">Googleでサインアップ</p>
         </Button>
         <Navigate href={(path) => path.signin.$url()}>
-          <a className="mt-4 text-sm text-gray-500 underline">
+          <a className="mt-4 md:text-sm text-xs text-gray-500 underline">
             アカウントをお持ちの方はこちらから
           </a>
         </Navigate>
       </div>
+      {/* <div
+        className="md:hidden block w-full md:w-2/5 h-2/3 md:h-full flex items-center justify-center bg-cover bg-center"
+        style={{ backgroundImage: `url("/theme.png")` }}
+      ></div> */}
     </div>
   )
 }

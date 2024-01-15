@@ -22,8 +22,8 @@ const Page: NextPage = () => {
 
   return (
     <CustomPage title="アンケート一覧" isSetUpOGP={false}>
-      <div className="flex flex-col items-center justify-center gap-4 w-full">
-        <div className="md:w-3/5 flex flex-col items-center justify-center gap-4 max-w-[530px]">
+      <div className="flex flex-col items-center justify-center gap-2 w-full">
+        <div className="md:w-3/5 flex flex-col items-center justify-center gap-2 max-w-[530px]">
           {otherPeopleQuestionnaires.map((questionnaire, index) => (
             <CardItem
               questionnaire={questionnaire}

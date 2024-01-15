@@ -59,7 +59,7 @@ export const Header: React.FC<HeaderProps> = ({ isSignInOrUpPage }) => {
       py={4}
       bgColor={'#FF9A00'}
       className={`sticky top-0 z-50 ${
-        isSignInOrUpPage ? 'w-[40%]' : ''
+        isSignInOrUpPage ? 'md:w-[40%]' : ''
       } left-0`}
     >
       <div className="flex items-center justify-between w-full px-8">
