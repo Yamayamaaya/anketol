@@ -1,6 +1,6 @@
 # アンケートの認証方法
 
-#### 1. google フォーム投稿の後、[投稿済みアンケート](https://anketol.web.app/mypage)よりアンケートを認証してください
+#### 1. google フォーム投稿の後、[投稿済みアンケート](https://anketol.web.app/mypage/posted)よりアンケートを認証してください
 
 - google からアンケトルへの権限付与を求められる場合があります。その場合は案内に従いアンケトルに権限を付与してください。
 - 認証時にエラーが発生した場合は、[お問い合わせ](https://anketol.web.app/support/contact)よりご連絡ください。
