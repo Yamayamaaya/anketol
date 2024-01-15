@@ -81,12 +81,11 @@ export const Page = () => {
         </Button>
         <button
           onClick={() => setMode(mode === 'signin' ? 'signup' : 'signin')}
+          className="mt-3 md:text-sm text-xs text-gray-500 underline"
         >
-          <a className="mt-4 md:text-sm text-xs text-gray-500 underline">
-            {mode === 'signin'
-              ? 'はじめての方はこちらから'
-              : 'アカウントをお持ちの方はこちらから'}
-          </a>
+          {mode === 'signin'
+            ? 'はじめての方はこちらから'
+            : 'アカウントをお持ちの方はこちらから'}
         </button>
       </div>
     </div>
