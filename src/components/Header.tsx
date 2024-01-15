@@ -153,28 +153,36 @@ export const Header: React.FC<HeaderProps> = ({ isSignInOrUpPage }) => {
           <DrawerCloseButton />
           <DrawerHeader>メニュー</DrawerHeader>
           <DrawerBody className="flex flex-col items-start gap-5">
-            <Navigate href={(path) => path.$url()}>
-              <p className="text-gray-700 hover:text-black hover:font-semibold">
-                トップページ
-              </p>
-            </Navigate>
-            <Navigate href={(path) => path.questionnaire.$url()}>
-              <p className="text-gray-700 hover:text-black hover:font-semibold">
-                アンケート投稿
-              </p>
-            </Navigate>
+            <div onClick={handleToggle}>
+              <Navigate href={(path) => path.$url()}>
+                <p className="text-gray-700 hover:text-black hover:font-semibold">
+                  トップページ
+                </p>
+              </Navigate>
+            </div>
+            <div onClick={handleToggle}>
+              <Navigate href={(path) => path.questionnaire.$url()}>
+                <p className="text-gray-700 hover:text-black hover:font-semibold">
+                  アンケート投稿
+                </p>
+              </Navigate>
+            </div>
             <Divider />
             <p className="text-gray-700">マイページ</p>
-            <Navigate href={(path) => path.mypage.profile.$url()}>
-              <p className="text-gray-700 hover:text-black text-base hover:font-semibold -mt-2 ml-3">
-                プロフィール
-              </p>
-            </Navigate>
-            <Navigate href={(path) => path.mypage.posted.$url()}>
-              <p className="text-gray-700 hover:text-black text-base hover:font-semibold -mt-2 ml-3">
-                投稿済みアンケート
-              </p>
-            </Navigate>
+            <div onClick={handleToggle}>
+              <Navigate href={(path) => path.mypage.profile.$url()}>
+                <p className="text-gray-700 hover:text-black text-base hover:font-semibold -mt-2 ml-3">
+                  プロフィール
+                </p>
+              </Navigate>
+            </div>
+            <div onClick={handleToggle}>
+              <Navigate href={(path) => path.mypage.posted.$url()}>
+                <p className="text-gray-700 hover:text-black text-base hover:font-semibold -mt-2 ml-3">
+                  投稿済みアンケート
+                </p>
+              </Navigate>
+            </div>
           </DrawerBody>
         </DrawerContent>
       </Drawer>
