@@ -155,7 +155,13 @@ export const CardItem = ({ questionnaire, user }: CardProps) => {
                 className="h-3 w-3 mx-2"
               />
             </button>
-            <button onClick={() => handleDeleteQuestionnaire(questionnaire.id)}>
+            <button
+              onClick={() => {
+                if (confirm('削除しますか？')) {
+                  handleDeleteQuestionnaire(questionnaire.id)
+                }
+              }}
+            >
               <FontAwesomeIcon
                 icon={faTrash}
                 size="xs"
