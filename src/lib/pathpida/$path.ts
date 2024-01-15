@@ -14,6 +14,9 @@ export const pagesPath = {
     $url: (url?: { hash?: string }) => ({ pathname: '/lp' as const, hash: url?.hash })
   },
   "mypage": {
+    "answered": {
+      $url: (url?: { hash?: string }) => ({ pathname: '/mypage/answered' as const, hash: url?.hash })
+    },
     "posted": {
       $url: (url?: { hash?: string }) => ({ pathname: '/mypage/posted' as const, hash: url?.hash })
     },
