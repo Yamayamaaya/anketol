@@ -1,6 +1,6 @@
 import { MarkdownContainer } from '@src/components/MarkdownContainer'
 import { useEffect, useState } from 'react'
-import Head from 'next/head'
+import CustomPage from '@src/components/CustomPage'
 
 const PrivacyPolicy = () => {
   const [markdown, setMarkdown] = useState('')
@@ -14,13 +14,9 @@ const PrivacyPolicy = () => {
     fetchMarkdown()
   }, [])
   return (
-    <>
-      <Head>
-        <title>プライバシーポリシー</title>
-        <meta property="og:title" content="プライバシーポリシー" />
-      </Head>
+    <CustomPage title="プライバシーポリシー">
       <MarkdownContainer markdown={markdown} />
-    </>
+    </CustomPage>
   )
 }
 

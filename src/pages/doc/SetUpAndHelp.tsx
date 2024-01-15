@@ -1,6 +1,6 @@
 import { MarkdownContainer } from '@src/components/MarkdownContainer'
 import { useEffect, useState } from 'react'
-import Head from 'next/head'
+import CustomPage from '@src/components/CustomPage'
 
 const SetUpAndHelp = () => {
   const [markdown, setMarkdown] = useState('')
@@ -14,13 +14,9 @@ const SetUpAndHelp = () => {
     fetchMarkdown()
   }, [])
   return (
-    <>
-      <Head>
-        <title>セットアップとヘルプ</title>
-        <meta property="og:title" content="セットアップとヘルプ" />
-      </Head>
+    <CustomPage title="セットアップとヘルプ">
       <MarkdownContainer markdown={markdown} />
-    </>
+    </CustomPage>
   )
 }
 

@@ -8,6 +8,7 @@ import 'tailwindcss/tailwind.css'
 import type { Questionnaire } from '@src/types/questionnaire'
 import { activateQuestionnaire } from '@src/feature/questionnaire/activateQuestionneaire'
 import QuestionnaireForm from '@src/components/questionaireForm'
+import CustomPage from '@src/components/CustomPage'
 
 export const Page = () => {
   const [questionnaire, setQuestionnaire] = useState<
@@ -100,16 +101,18 @@ export const Page = () => {
   }
 
   return (
-    <div className="flex flex-col items-center py-2">
-      <QuestionnaireForm
-        questionnaire={questionnaire}
-        setQuestionnaire={setQuestionnaire}
-        onSubmit={handleUpdateQuestionnaire}
-        inputError={inputError}
-        defaultValue={questionnaire}
-      />
-      <p className="mt-6 text-red-500">{inputError}</p>
-    </div>
+    <CustomPage title="アンケート編集">
+      <div className="flex flex-col items-center py-2">
+        <QuestionnaireForm
+          questionnaire={questionnaire}
+          setQuestionnaire={setQuestionnaire}
+          onSubmit={handleUpdateQuestionnaire}
+          inputError={inputError}
+          defaultValue={questionnaire}
+        />
+        <p className="mt-6 text-red-500">{inputError}</p>
+      </div>
+    </CustomPage>
   )
 }
 

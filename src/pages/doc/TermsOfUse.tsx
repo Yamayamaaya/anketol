@@ -1,6 +1,6 @@
 import { MarkdownContainer } from '@src/components/MarkdownContainer'
 import { useEffect, useState } from 'react'
-import Head from 'next/head'
+import CustomPage from '@src/components/CustomPage'
 
 const TermsOfUse = () => {
   const [markdown, setMarkdown] = useState('')
@@ -13,13 +13,9 @@ const TermsOfUse = () => {
     fetchMarkdown()
   }, [])
   return (
-    <>
-      <Head>
-        <title>利用規約</title>
-        <meta property="og:title" content="利用規約" />
-      </Head>
+    <CustomPage title="利用規約">
       <MarkdownContainer markdown={markdown} />
-    </>
+    </CustomPage>
   )
 }
 
