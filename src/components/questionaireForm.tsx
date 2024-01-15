@@ -10,6 +10,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { Timestamp } from 'firebase/firestore'
 import type { Questionnaire } from '@src/types/questionnaire'
+import { useEffect } from 'react'
 
 type Props = {
   questionnaire: Pick<
@@ -24,6 +25,9 @@ type Props = {
   ) => void
   onSubmit: (e: FormEvent<HTMLFormElement>) => void
   inputError: string
+  defaultValue?: Partial<
+    Pick<Questionnaire, 'title' | 'url' | 'editUrl' | 'expiry' | 'active'>
+  >
 }
 
 const QuestionnaireForm = ({
@@ -31,7 +35,14 @@ const QuestionnaireForm = ({
   setQuestionnaire,
   onSubmit,
   inputError,
+  defaultValue,
 }: Props) => {
+  useEffect(() => {
+    if (defaultValue) {
+      setQuestionnaire({ ...questionnaire, ...defaultValue })
+    }
+  }, [defaultValue])
+
   return (
     <form
       onSubmit={onSubmit}

@@ -2,27 +2,20 @@
 import { useState, useEffect, FormEvent } from 'react'
 import { useRouter } from 'next/router'
 import { getFirestore, doc, getDoc, updateDoc } from '@firebase/firestore'
-import {
-  FormControl,
-  FormLabel,
-  Input,
-  Button,
-  useToast,
-  Checkbox,
-} from '@chakra-ui/react'
-import DatePicker from 'react-datepicker'
+import { useToast } from '@chakra-ui/react'
 import 'react-datepicker/dist/react-datepicker.css'
 import 'tailwindcss/tailwind.css'
 import type { Questionnaire } from '@src/types/questionnaire'
-import { Timestamp } from 'firebase/firestore'
 import { activateQuestionnaire } from '@src/feature/questionnaire/activateQuestionneaire'
+import QuestionnaireForm from '@src/components/questionaireForm'
 
 export const Page = () => {
   const [questionnaire, setQuestionnaire] = useState<
-    Pick<Questionnaire, 'title' | 'url' | 'expiry' | 'active'>
+    Pick<Questionnaire, 'title' | 'url' | 'editUrl' | 'expiry' | 'active'>
   >({
     title: '',
     url: '',
+    editUrl: '',
     expiry: null,
     active: false,
   })
@@ -108,71 +101,13 @@ export const Page = () => {
 
   return (
     <div className="flex flex-col items-center py-2">
-      <form
+      <QuestionnaireForm
+        questionnaire={questionnaire}
+        setQuestionnaire={setQuestionnaire}
         onSubmit={handleUpdateQuestionnaire}
-        className="p-6 mt-6 text-left border w-96 rounded-xl shadow-xl bg-white"
-      >
-        <FormControl>
-          <FormLabel className="pt-3">タイトル</FormLabel>
-          <Input
-            type="text"
-            value={questionnaire.title}
-            placeholder="アンケートタイトル"
-            onChange={(e) =>
-              setQuestionnaire({ ...questionnaire, title: e.target.value })
-            }
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel className="pt-3">有効期限</FormLabel>
-          <DatePicker
-            selected={
-              questionnaire.expiry ? questionnaire.expiry.toDate() : null
-            }
-            onChange={(date: Date) =>
-              setQuestionnaire({
-                ...questionnaire,
-                expiry: Timestamp.fromDate(date),
-              })
-            }
-            placeholderText="有効期限"
-            className="border border-gray-200 rounded-md w-[20.8rem] py-2 pl-2"
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel className="pt-3">URL</FormLabel>
-          <Input
-            type="text"
-            placeholder="googleフォームのURL"
-            value={questionnaire.url}
-            onChange={(e) =>
-              setQuestionnaire({ ...questionnaire, url: e.target.value })
-            }
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel className="pt-3">有効</FormLabel>
-          <Checkbox
-            isChecked={questionnaire.active}
-            onChange={(e) =>
-              setQuestionnaire({ ...questionnaire, active: e.target.checked })
-            }
-          />
-          {questionnaire.active ? (
-            <p
-              className="text-gray-500 text-sm
-            "
-            >
-              ※他のアンケートを無効にします
-            </p>
-          ) : (
-            <></>
-          )}
-        </FormControl>
-        <Button type="submit" className="mt-6">
-          更新
-        </Button>
-      </form>
+        inputError={inputError}
+        defaultValue={questionnaire}
+      />
       <p className="mt-6 text-red-500">{inputError}</p>
     </div>
   )
