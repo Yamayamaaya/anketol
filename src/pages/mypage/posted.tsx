@@ -4,6 +4,7 @@ import { useUserById } from '@src/hooks/firestoreDocument/useUser'
 import { useQuestionnaireByUserId } from '@src/hooks/firestoreDocument/useQuestionnaire'
 import { CardItem } from '@src/components/CardItem'
 import CustomPage from '@src/components/CustomPage'
+import { ProfileCard } from '@src/components/ProfileCard'
 
 export const PostedPage = () => {
   const { user: authUser } = useAuthContext()
@@ -11,24 +12,29 @@ export const PostedPage = () => {
   const { questionnaires, loading: questionnairesLoading } =
     useQuestionnaireByUserId(user?.id)
 
-  if (!user) {
-    return <h1>ログインしていません</h1>
-  }
-
   return (
     <CustomPage
       title="投稿済みアンケート"
+      isTitleHidden={true}
       isAuthPageHidden={!user}
       loading={userLoading || questionnairesLoading}
     >
-      <div className="mx-[20vw] flex flex-col items-center justify-center gap-2 m-4 max-w-[60vw]">
-        {questionnaires.map((questionnaire) => (
-          <CardItem
-            key={questionnaire.id}
-            questionnaire={questionnaire}
-            user={user}
-          />
-        ))}
+      <div className="w-screen flex ">
+        <ProfileCard user={user || undefined} display="posted" />
+        <div className="md:w-3/4 md:p-12 w-full">
+          <h2 className="text-2xl font-bold mt-4 text-center">
+            投稿済みアンケート
+          </h2>
+          <div className="mx-[3%] flex flex-col items-center justify-center gap-2 m-4 w-[94%]">
+            {questionnaires.map((questionnaire) => (
+              <CardItem
+                key={questionnaire.id}
+                questionnaire={questionnaire}
+                user={user || undefined}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </CustomPage>
   )
