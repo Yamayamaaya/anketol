@@ -33,9 +33,6 @@ export const pagesPath = {
   "signin": {
     $url: (url?: { hash?: string }) => ({ pathname: '/signin' as const, hash: url?.hash })
   },
-  "signup": {
-    $url: (url?: { hash?: string }) => ({ pathname: '/signup' as const, hash: url?.hash })
-  },
   "support": {
     "contact": {
       $url: (url?: { hash?: string }) => ({ pathname: '/support/contact' as const, hash: url?.hash })

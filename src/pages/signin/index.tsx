@@ -4,20 +4,19 @@ import { FirebaseError } from '@firebase/util'
 import { useRouter } from '@src/hooks/hooks/useRouter'
 import { useSignInWithGoogle } from '@src/hooks/firebase/useSignInWithGoogle'
 import Image from 'next/image'
-import { Navigate } from '@src/components/Navigate'
 
 export const Page = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false)
   const toast = useToast()
   const { push } = useRouter()
   const signInWithGoogle = useSignInWithGoogle()
+  const [mode, setMode] = useState<'signin' | 'signup'>('signin')
 
-  const handleGoogleSignIn = async () => {
-    setIsLoading(true)
+  const handleGoogleSignInOrUp = async () => {
     try {
       await signInWithGoogle()
       toast({
-        title: 'サインインしました。',
+        title:
+          mode === 'signin' ? 'サインインしました。' : 'サインアップしました。',
         status: 'success',
         position: 'top',
       })
@@ -31,8 +30,6 @@ export const Page = () => {
       if (e instanceof FirebaseError) {
         console.error('Firebase Authentication Error', e)
       }
-    } finally {
-      setIsLoading(false)
     }
   }
 
@@ -63,7 +60,7 @@ export const Page = () => {
           className="md:mb-20 mb-8 md:hidden block"
         />
         <Button
-          onClick={handleGoogleSignIn}
+          onClick={handleGoogleSignInOrUp}
           className="flex items-center gap-2"
         >
           <img
@@ -78,18 +75,20 @@ export const Page = () => {
             height="15"
             className="md:hidden block"
           />
-          <p className="text-sm md:text-base">Googleでサインイン</p>
+          <p className="text-sm md:text-base">
+            Googleで{mode === 'signin' ? 'サインイン' : 'サインアップ'}
+          </p>
         </Button>
-        <Navigate href={(path) => path.signup.$url()}>
+        <button
+          onClick={() => setMode(mode === 'signin' ? 'signup' : 'signin')}
+        >
           <a className="mt-4 md:text-sm text-xs text-gray-500 underline">
-            はじめての方はこちらから
+            {mode === 'signin'
+              ? 'はじめての方はこちらから'
+              : 'アカウントをお持ちの方はこちらから'}
           </a>
-        </Navigate>
+        </button>
       </div>
-      {/* <div
-      className="md:hidden block w-full md:w-2/5 h-2/3 md:h-full flex items-center justify-center bg-cover bg-center"
-      style={{ backgroundImage: `url("/theme.png")` }}
-    ></div> */}
     </div>
   )
 }
