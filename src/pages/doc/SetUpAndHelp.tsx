@@ -14,7 +14,7 @@ const SetUpAndHelp = () => {
     fetchMarkdown()
   }, [])
   return (
-    <CustomPage title="セットアップとヘルプ">
+    <CustomPage title="セットアップとヘルプ" isTitleHidden={true}>
       <MarkdownContainer markdown={markdown} />
     </CustomPage>
   )

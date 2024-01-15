@@ -14,7 +14,7 @@ const PrivacyPolicy = () => {
     fetchMarkdown()
   }, [])
   return (
-    <CustomPage title="プライバシーポリシー">
+    <CustomPage title="プライバシーポリシー" isTitleHidden={true}>
       <MarkdownContainer markdown={markdown} />
     </CustomPage>
   )

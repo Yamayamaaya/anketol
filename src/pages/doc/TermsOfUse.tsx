@@ -13,7 +13,7 @@ const TermsOfUse = () => {
     fetchMarkdown()
   }, [])
   return (
-    <CustomPage title="利用規約">
+    <CustomPage title="利用規約" isTitleHidden={true}>
       <MarkdownContainer markdown={markdown} />
     </CustomPage>
   )

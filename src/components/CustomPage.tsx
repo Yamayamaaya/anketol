@@ -7,6 +7,7 @@ type PageProps = {
   title: string
   children: React.ReactNode
   isSetUpOGP?: boolean
+  isTitleHidden?: boolean
   isAuthPageHidden?: boolean
   loading?: boolean
 }
@@ -15,6 +16,7 @@ const CustomPage: React.FC<PageProps> = ({
   title,
   children,
   isSetUpOGP = true,
+  isTitleHidden = false,
   isAuthPageHidden = false,
   loading = false,
 }) => {
@@ -35,9 +37,11 @@ const CustomPage: React.FC<PageProps> = ({
         </Head>
       )}
       <div className="w-[100vw] flex flex-col items-center">
-        <h1 className="text-2xl my-6 font-bold w-[100vw] text-center">
-          {title}
-        </h1>
+        {!isTitleHidden && (
+          <h1 className="text-2xl my-6 font-bold w-[100vw] text-center">
+            {title}
+          </h1>
+        )}
         {loading && (
           <Spinner
             thickness="4px"
