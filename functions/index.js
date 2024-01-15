@@ -38,11 +38,13 @@ const updateUserAnswerCount = (answerLog) => {
     .then((querySnapshot) => {
       if (querySnapshot.size === 1) {
         const user = querySnapshot.docs[0].data()
-        // answerCountが存在しない場合は0を初期値とする
         const currentAnswerCount = user.answerCount || 0
         const newAnswerCount = currentAnswerCount + 1
         querySnapshot.docs[0].ref.update({ answerCount: newAnswerCount })
       }
+    })
+    .catch((error) => {
+      console.error('Error occurred while updating user answer count', error)
     })
 }
 
@@ -55,10 +57,15 @@ const updateQuestionnaireAnsweredCount = (answerLog) => {
     .then((doc) => {
       if (doc.exists) {
         const questionnaire = doc.data()
-        // answeredCountが存在しない場合は0を初期値とする
         const currentAnsweredCount = questionnaire.answeredCount || 0
         const newAnsweredCount = currentAnsweredCount + 1
         doc.ref.update({ answeredCount: newAnsweredCount })
       }
+    })
+    .catch((error) => {
+      console.error(
+        'Error occurred while updating questionnaire answered count',
+        error
+      )
     })
 }
