@@ -4,43 +4,7 @@ import { CardItem } from '@src/components/CardItem'
 import CustomPage from '@src/components/CustomPage'
 import { ProfileCard } from '@src/components/ProfileCard'
 import { useAnswerLogsByRespondentGmail } from '@src/hooks/firestoreDocument/useAnswerLog'
-import { getFirestore, doc, getDoc } from '@firebase/firestore'
-import type { Questionnaire } from '@src/types/questionnaire'
-import { useEffect, useState } from 'react'
-
-const useQuestionnairesByIds = (ids: string[]) => {
-  const [questionnaires, setQuestionnaires] = useState<Questionnaire[]>([])
-  const [loading, setLoading] = useState<boolean>(true)
-  const [error, setError] = useState<Error | null>(null)
-
-  useEffect(() => {
-    const fetchQuestionnaires = async () => {
-      try {
-        const db = getFirestore()
-        const fetchedQuestionnaires = await Promise.all(
-          ids.map(async (id) => {
-            const docRef = doc(db, 'questionnaires', id)
-            const docSnap = await getDoc(docRef)
-            return docSnap.exists()
-              ? ({ id: docSnap.id, ...docSnap.data() } as Questionnaire)
-              : null
-          })
-        )
-        setQuestionnaires(
-          fetchedQuestionnaires.filter((q) => q !== null) as Questionnaire[]
-        )
-      } catch (e) {
-        setError(e as Error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchQuestionnaires()
-  }, [ids])
-
-  return { questionnaires, loading, error }
-}
+import { useQuestionnairesByIds } from '@src/hooks/firestoreDocument/useQuestionnaire'
 
 export const AnsweredPage = () => {
   const { user: authUser } = useAuthContext()
@@ -51,8 +15,7 @@ export const AnsweredPage = () => {
 
   const questionnaireIds = answerLogs.map((answerLog) => answerLog.formId)
 
-  const { questionnaires, loading, error } =
-    useQuestionnairesByIds(questionnaireIds)
+  const { questionnaires, loading } = useQuestionnairesByIds(questionnaireIds)
 
   return (
     <CustomPage

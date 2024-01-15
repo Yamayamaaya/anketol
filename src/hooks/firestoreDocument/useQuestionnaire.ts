@@ -34,6 +34,7 @@ export const useQuestionnaires = () => {
 
   return { questionnaires, loading, error }
 }
+
 export const useQuestionnaireById = (id?: string) => {
   const [questionnaire, setQuestionnaire] = useState<Questionnaire | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
@@ -66,6 +67,40 @@ export const useQuestionnaireById = (id?: string) => {
   }, [id])
 
   return { questionnaire, loading, error }
+}
+
+export const useQuestionnairesByIds = (ids: string[]) => {
+  const [questionnaires, setQuestionnaires] = useState<Questionnaire[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+  const [error, setError] = useState<Error | null>(null)
+
+  useEffect(() => {
+    const fetchQuestionnaires = async () => {
+      try {
+        const db = getFirestore()
+        const fetchedQuestionnaires = await Promise.all(
+          ids.map(async (id) => {
+            const docRef = doc(db, 'questionnaires', id)
+            const docSnap = await getDoc(docRef)
+            return docSnap.exists()
+              ? ({ id: docSnap.id, ...docSnap.data() } as Questionnaire)
+              : null
+          })
+        )
+        setQuestionnaires(
+          fetchedQuestionnaires.filter((q) => q !== null) as Questionnaire[]
+        )
+      } catch (e) {
+        setError(e as Error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchQuestionnaires()
+  }, [ids])
+
+  return { questionnaires, loading, error }
 }
 
 export const useQuestionnaireByUserId = (userId?: string) => {
@@ -101,7 +136,6 @@ export const useQuestionnaireByUserId = (userId?: string) => {
 
   return { questionnaires, loading, error }
 }
-
 export const useOtherPeopleQuestionnairesByUserId = (userId: string) => {
   const [questionnaires, setQuestionnaires] = useState<Questionnaire[]>([])
   const [loading, setLoading] = useState<boolean>(true)
