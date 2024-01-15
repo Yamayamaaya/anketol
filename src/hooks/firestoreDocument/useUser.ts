@@ -17,7 +17,6 @@ export const useUserById = (id?: string) => {
         const db = getFirestore()
         const userDocRef = doc(db, 'users', id)
         const userDoc = await getDoc(userDocRef)
-        console.log('userDoc', userDoc)
         if (!userDoc.exists) {
           setUser(null)
         } else {
