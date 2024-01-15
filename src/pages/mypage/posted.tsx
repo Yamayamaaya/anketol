@@ -21,7 +21,7 @@ export const PostedPage = () => {
       isAuthPageHidden={!user}
       loading={userLoading || questionnairesLoading}
     >
-      <div className="mx-[10vw] flex flex-col items-center justify-center gap-2 m-4 max-w-[80vw]">
+      <div className="mx-[20vw] flex flex-col items-center justify-center gap-2 m-4 max-w-[60vw]">
         {questionnaires.map((questionnaire) => (
           <CardItem
             key={questionnaire.id}
