@@ -140,7 +140,7 @@ export const Header: React.FC<HeaderProps> = ({ isSignInOrUpPage }) => {
               <MenuItem onClick={() => push((path) => path.signin.$url())}>
                 サインイン
               </MenuItem>
-              <MenuItem onClick={() => push((path) => path.signup.$url())}>
+              <MenuItem onClick={() => push((path) => path.signin.$url())}>
                 サインアップ
               </MenuItem>
             </MenuList>
