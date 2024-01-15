@@ -7,7 +7,7 @@ const LandingPage = () => {
   const router = useRouter()
 
   const goToSignUp = () => {
-    router.push('/signup')
+    router.push('/signin')
   }
 
   return (
@@ -46,7 +46,7 @@ const LandingPage = () => {
             </div>
           </div>
           <button
-            className="max-w-[405px] h-12 bg-[#FFA200] rounded-3xl text-2xl font-bold shadow-md  hover:shadow-xl border-2 border-white text-white px-12 py-6 flex items-center justify-center  transition ease-in-out hover:-translate-y-0.5 hover:scale-110 hover:bg-[#FFAA00] duration-300 my-6"
+            className="max-w-[405px] h-12 bg-[#FFA200] rounded-3xl text-2xl font-bold shadow-md  hover:shadow-xl border-2 border-white text-white px-12 py-6 flex items-center justify-center  transition ease-in-out hover:-translate-y-0.5 hover:scale-110 hover:bg-[#FFAA00] duration-300 my-6 mb-12"
             onClick={goToSignUp}
           >
             今すぐ始める ＞
@@ -123,7 +123,7 @@ const LandingPage = () => {
             </div>
           </div>
           <button
-            className="max-w-[405px] h-12 bg-[#FFA200] rounded-3xl text-2xl font-bold shadow-md  hover:shadow-xl border-2 border-white text-white px-12 py-6 flex items-center justify-center  transition ease-in-out hover:-translate-y-0.5 hover:scale-110 hover:bg-[#FFAA00] duration-300 my-6"
+            className="max-w-[405px] h-12 bg-[#FFA200] rounded-3xl text-2xl font-bold shadow-md  hover:shadow-xl border-2 border-white text-white px-12 py-6 flex items-center justify-center  transition ease-in-out hover:-translate-y-0.5 hover:scale-110 hover:bg-[#FFAA00] duration-300 my-6  mb-12"
             onClick={goToSignUp}
           >
             今すぐ始める ＞
