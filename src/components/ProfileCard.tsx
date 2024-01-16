@@ -1,5 +1,6 @@
 import { Avatar, Divider } from '@chakra-ui/react'
 import {
+  faBell,
   faFile,
   faSquareCheck,
   faUser,
@@ -10,7 +11,7 @@ import { useRouter } from 'next/router'
 
 type ProfileCardProps = {
   user?: User
-  display: 'profile' | 'posted' | 'answered'
+  display: 'profile' | 'posted' | 'answered' | 'notification'
 }
 
 export const ProfileCard = ({ user, display }: ProfileCardProps) => {
@@ -57,6 +58,15 @@ export const ProfileCard = ({ user, display }: ProfileCardProps) => {
               className="h-3 w-3"
             />
             <span>回答済みアンケート</span>
+          </button>
+          <button
+            className={` flex items-center gap-1.5
+              ${display === 'notification' ? 'text-black' : 'text-gray-700'}
+            `}
+            onClick={() => router.push('/mypage/notification')}
+          >
+            <FontAwesomeIcon icon={faBell} size="xs" className="h-3 w-3" />
+            <span>あなたへのお知らせ</span>
           </button>
         </div>
       </div>
