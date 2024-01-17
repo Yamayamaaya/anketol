@@ -33,8 +33,6 @@ export const NotificationPage = () => {
   )
 
   const updateLastNotificationCheckTime = async () => {
-    console.log('updateLastNotificationCheckTime')
-    console.log(user)
     if (user?.id) {
       const db = getFirestore()
       const userRef = doc(db, 'users', user.id)
