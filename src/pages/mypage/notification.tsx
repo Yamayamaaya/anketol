@@ -3,7 +3,7 @@ import {
   useAnswerLogsByRespondentGmail,
   useAnswerLogsByQuestionnaireIds,
 } from '@src/hooks/firestoreDocument/useAnswerLog'
-import { useQuestionnaireByUserId } from '@src/hooks/firestoreDocument/useQuestionnaire'
+import { useQuestionnairesByUserId } from '@src/hooks/firestoreDocument/useQuestionnaire'
 import CustomPage from '@src/components/CustomPage'
 import { NotificationItem } from '@src/components/NotificationItem'
 import { useUserById } from '@src/hooks/firestoreDocument/useUser'
@@ -17,7 +17,7 @@ export const NotificationPage = () => {
   const { user, loading: userLoading } = useUserById(authUser?.uid)
   const { answerLogs, loading: answerLogsLoading } =
     useAnswerLogsByRespondentGmail(user?.email || '')
-  const { questionnaires } = useQuestionnaireByUserId(user?.id)
+  const { questionnaires } = useQuestionnairesByUserId(user?.id)
 
   // 自分のアンケートIDのリストを取得
   const myQuestionnaireIds = questionnaires.map((q) => q.id)

@@ -103,7 +103,7 @@ export const useQuestionnairesByIds = (ids: string[]) => {
   return { questionnaires, loading, error }
 }
 
-export const useQuestionnaireByUserId = (userId?: string) => {
+export const useQuestionnairesByUserId = (userId?: string) => {
   const [questionnaires, setQuestionnaires] = useState<Questionnaire[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<Error | null>(null)

@@ -1,7 +1,7 @@
 import { useAuthContext } from '@src/feature/auth/provider/AuthProvider'
 
 import { useUserById } from '@src/hooks/firestoreDocument/useUser'
-import { useQuestionnaireByUserId } from '@src/hooks/firestoreDocument/useQuestionnaire'
+import { useQuestionnairesByUserId } from '@src/hooks/firestoreDocument/useQuestionnaire'
 import { CardItem } from '@src/components/CardItem'
 import CustomPage from '@src/components/CustomPage'
 import { ProfileCard } from '@src/components/ProfileCard'
@@ -10,7 +10,7 @@ export const PostedPage = () => {
   const { user: authUser } = useAuthContext()
   const { user, loading: userLoading } = useUserById(authUser?.uid)
   const { questionnaires, loading: questionnairesLoading } =
-    useQuestionnaireByUserId(user?.id)
+    useQuestionnairesByUserId(user?.id)
 
   return (
     <CustomPage
