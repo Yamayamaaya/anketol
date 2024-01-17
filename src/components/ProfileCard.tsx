@@ -8,6 +8,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { User } from '@src/types/user'
 import { useRouter } from 'next/router'
+import { useHaveUncheckNotification } from '@src/hooks/useHaveUncheckNotification'
 
 type ProfileCardProps = {
   user?: User
@@ -16,6 +17,7 @@ type ProfileCardProps = {
 
 export const ProfileCard = ({ user, display }: ProfileCardProps) => {
   const router = useRouter()
+  const haveUncheckNotification = useHaveUncheckNotification(user!)
   return (
     <div className="w-1/4  flex hidden md:block">
       <div
@@ -70,6 +72,9 @@ export const ProfileCard = ({ user, display }: ProfileCardProps) => {
           >
             <FontAwesomeIcon icon={faBell} size="xs" className="h-3 w-3" />
             <span>あなたへのお知らせ</span>
+            {haveUncheckNotification && (
+              <div className="absolute ml-[0.4rem] mb-2 border-white border text-xs md:text-sm text-gray-500 w-[0.6rem] h-[0.6rem] bg-[#38a169] rounded-full"></div>
+            )}
           </button>
         </div>
       </div>

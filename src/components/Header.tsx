@@ -20,21 +20,25 @@ import {
 import { useAuthContext } from '@src/feature/auth/provider/AuthProvider'
 import { getAuth, signOut } from 'firebase/auth'
 import { Navigate } from '@src/components/Navigate'
-import { useRouter } from '@src/hooks/hooks/useRouter'
+import { useRouter } from '@src/hooks/useRouter'
 import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
+import { useHaveUncheckNotification } from '@src/hooks/useHaveUncheckNotification'
+import { useUserById } from '@src/hooks/firestoreDocument/useUser'
 
 interface HeaderProps {
   isSignInOrUpPage: boolean
 }
 
 export const Header: React.FC<HeaderProps> = ({ isSignInOrUpPage }) => {
-  const { user } = useAuthContext()
+  const { user: AuthUser } = useAuthContext()
+  const { user } = useUserById(AuthUser?.uid)
   const toast = useToast()
   const { push } = useRouter()
   const [isOpen, setIsOpen] = useState(false)
+  const haveUncheckNotification = useHaveUncheckNotification(user!)
 
   const handleSignOut = async () => {
     try {
@@ -94,7 +98,9 @@ export const Header: React.FC<HeaderProps> = ({ isSignInOrUpPage }) => {
                 height={10}
                 src={user.photoURL || 'default_image_url'}
               >
-                <AvatarBadge boxSize="0.75em" bg="green.500" />
+                {haveUncheckNotification && (
+                  <AvatarBadge boxSize="0.75em" bg="green.500" />
+                )}
               </Avatar>
             </MenuButton>
             <MenuList py={0}>
