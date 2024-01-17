@@ -1,4 +1,3 @@
-import { useUserById } from '@src/hooks/firestoreDocument/useUser'
 import { useQuestionnairesByUserId } from './firestoreDocument/useQuestionnaire'
 import {
   useAnswerLogsByRespondentGmail,
@@ -7,7 +6,6 @@ import {
 import type { User } from '@src/types/user'
 
 export const useHaveUncheckNotification = (user: User) => {
-  console.log('useHaveUncheckNotification')
   const { questionnaires } = useQuestionnairesByUserId(user?.id)
   const myQuestionnaireIds = questionnaires.map((q) => q.id)
   const { answerLogs: myAnswerLogs, loading: myAnswerLogsLoading } =
@@ -19,10 +17,6 @@ export const useHaveUncheckNotification = (user: User) => {
     return false
   }
 
-  console.log(
-    'user?.lastNotificationCheckTime',
-    user?.lastNotificationCheckTime?.toDate().toLocaleString()
-  )
   const result = !(
     user?.lastNotificationCheckTime &&
     [...answerLogs, ...myAnswerLogs].some(
@@ -31,8 +25,6 @@ export const useHaveUncheckNotification = (user: User) => {
         user.lastNotificationCheckTime?.toDate().getTime()!
     )
   )
-
-  console.log('result', result)
 
   return result
 }
