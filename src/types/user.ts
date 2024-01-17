@@ -8,4 +8,5 @@ export type User = {
   createdTime: Timestamp
   updatedTime: Timestamp
   answerCount?: number
+  lastNotificationCheckTime?: Timestamp
 }

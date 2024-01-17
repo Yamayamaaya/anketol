@@ -9,6 +9,8 @@ import { NotificationItem } from '@src/components/NotificationItem'
 import { useUserById } from '@src/hooks/firestoreDocument/useUser'
 import { ProfileCard } from '@src/components/ProfileCard'
 import { Divider } from '@chakra-ui/react'
+import { doc, updateDoc, getFirestore } from 'firebase/firestore'
+import { useEffect } from 'react'
 
 export const NotificationPage = () => {
   const { user: authUser } = useAuthContext()
@@ -24,6 +26,28 @@ export const NotificationPage = () => {
   const { answerLogs: myAnswerLogs } =
     useAnswerLogsByQuestionnaireIds(myQuestionnaireIds)
 
+  // アンサーログをまとめて、新しい順に並び替える
+  const answerLogsAll = [...answerLogs, ...myAnswerLogs].sort(
+    (a, b) =>
+      b.createdTime.toDate().getTime() - a.createdTime.toDate().getTime()
+  )
+
+  const updateLastNotificationCheckTime = async () => {
+    console.log('updateLastNotificationCheckTime')
+    console.log(user)
+    if (user?.id) {
+      const db = getFirestore()
+      const userRef = doc(db, 'users', user.id)
+      await updateDoc(userRef, {
+        lastNotificationCheckTime: new Date(),
+      })
+    }
+  }
+
+  useEffect(() => {
+    updateLastNotificationCheckTime()
+  }, [user])
+
   return (
     <CustomPage
       title="あなたへのお知らせ"
@@ -38,15 +62,20 @@ export const NotificationPage = () => {
               あなたへのお知らせ
             </h1>
             <div className="w-full mt-4">
-              {answerLogs.map((log) => (
+              {answerLogsAll.map((log) => (
                 <>
-                  <NotificationItem key={log.id} log={log} />
-                  <Divider />
-                </>
-              ))}
-              {myAnswerLogs.map((log) => (
-                <>
-                  <NotificationItem key={log.id} log={log} />
+                  <NotificationItem
+                    key={log.id}
+                    log={log}
+                    owner={log.respondentGmail === user?.email}
+                    bagde={
+                      !(
+                        user?.lastNotificationCheckTime &&
+                        log.createdTime.toDate().getTime() <
+                          user?.lastNotificationCheckTime?.toDate().getTime()
+                      )
+                    }
+                  />
                   <Divider />
                 </>
               ))}
