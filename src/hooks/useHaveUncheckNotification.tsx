@@ -17,8 +17,6 @@ export const useHaveUncheckNotification = (user: User) => {
     return false
   }
 
-  console.log([...answerLogs, ...myAnswerLogs].length)
-
   const result = !(
     user?.lastNotificationCheckTime &&
     ([...answerLogs, ...myAnswerLogs].length == 0 ||
