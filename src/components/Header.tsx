@@ -121,6 +121,23 @@ export const Header: React.FC<HeaderProps> = ({ isSignInOrUpPage }) => {
                 >
                   投稿済みアンケート
                 </MenuItem>
+                <MenuItem
+                  onClick={() => push((path) => path.mypage.answered.$url())}
+                  className="text-sm"
+                >
+                  回答済みアンケート
+                </MenuItem>
+                <MenuItem
+                  onClick={() =>
+                    push((path) => path.mypage.notification.$url())
+                  }
+                  className="text-sm"
+                >
+                  あなたへのお知らせ
+                  {haveUncheckNotification && (
+                    <div className="inline-block ml-2 text-xs md:text-sm text-gray-500 w-[0.5rem] h-[0.5rem] bg-[#38a169] rounded-full"></div>
+                  )}
+                </MenuItem>
               </MenuGroup>
               <MenuDivider />
               <MenuGroup title="アカウント">
@@ -189,6 +206,23 @@ export const Header: React.FC<HeaderProps> = ({ isSignInOrUpPage }) => {
               <Navigate href={(path) => path.mypage.posted.$url()}>
                 <p className="text-gray-700 hover:text-black text-base hover:font-semibold -mt-2 ml-3">
                   投稿済みアンケート
+                </p>
+              </Navigate>
+            </div>
+            <div onClick={handleToggle}>
+              <Navigate href={(path) => path.mypage.answered.$url()}>
+                <p className="text-gray-700 hover:text-black text-base hover:font-semibold -mt-2 ml-3">
+                  回答済みアンケート
+                </p>
+              </Navigate>
+            </div>
+            <div onClick={handleToggle}>
+              <Navigate href={(path) => path.mypage.notification.$url()}>
+                <p className="text-gray-700 hover:text-black text-base hover:font-semibold -mt-2 ml-3">
+                  あなたへのお知らせ
+                  {haveUncheckNotification && (
+                    <div className="inline-block ml-2 text-xs md:text-sm text-gray-500 w-[0.5rem] h-[0.5rem] bg-[#38a169] rounded-full"></div>
+                  )}
                 </p>
               </Navigate>
             </div>

@@ -11,9 +11,11 @@ import '../styles/globals.css'
 
 initializeFirebaseApp()
 function MyApp({ Component, pageProps }: AppProps) {
-  const { pathname } = useRouter()
+  const { pathname, asPath } = useRouter()
   const isSignInOrUpPage = pathname === '/signin' || pathname === '/signup'
   const isLp = pathname === '/lp'
+  const isNotificationPage = asPath === '/mypage/notification'
+  const headerKey = isNotificationPage ? 'notification' : 'other'
 
   return (
     <>
@@ -23,7 +25,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <ChakraProvider theme={theme}>
         <AuthProvider>
-          {!isLp && <Header isSignInOrUpPage={isSignInOrUpPage} />}
+          {!isLp && (
+            <Header key={headerKey} isSignInOrUpPage={isSignInOrUpPage} />
+          )}
           <chakra.main flex={1} display={'flex'} flexDirection={'column'}>
             <Component {...pageProps} />
           </chakra.main>
