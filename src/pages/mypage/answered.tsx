@@ -27,7 +27,7 @@ export const AnsweredPage = () => {
       <div className="w-screen flex ">
         <ProfileCard user={user || undefined} display="answered" />
         <div className="md:w-3/4 md:p-12 w-full">
-          <h2 className="text-2xl font-bold mt-4 text-center">
+          <h2 className="text-xl md:text-2xl font-bold mt-4 text-center">
             回答済みアンケート
           </h2>
           <div className="mx-[3%] flex flex-col items-center justify-center gap-2 m-4 w-[94%]">

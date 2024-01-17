@@ -39,7 +39,7 @@ export const ProfileCard = ({ user, display }: ProfileCardProps) => {
           </button>
           <button
             className={` flex items-center gap-1.5
-              ${display === 'posted' ? 'text-black' : 'text-gray-700'}
+              ${display === 'posted' ? 'text-black' : 'text-gray-500'}
             `}
             onClick={() => router.push('/mypage/posted')}
           >
@@ -48,7 +48,7 @@ export const ProfileCard = ({ user, display }: ProfileCardProps) => {
           </button>
           <button
             className={` flex items-center gap-1.5
-              ${display === 'answered' ? 'text-black' : 'text-gray-700'}
+              ${display === 'answered' ? 'text-black' : 'text-gray-500'}
             `}
             onClick={() => router.push('/mypage/answered')}
           >
@@ -61,7 +61,7 @@ export const ProfileCard = ({ user, display }: ProfileCardProps) => {
           </button>
           <button
             className={` flex items-center gap-1.5
-              ${display === 'notification' ? 'text-black' : 'text-gray-700'}
+              ${display === 'notification' ? 'text-black' : 'text-gray-500'}
             `}
             onClick={() => router.push('/mypage/notification')}
           >

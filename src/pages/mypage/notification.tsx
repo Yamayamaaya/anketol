@@ -31,10 +31,12 @@ export const NotificationPage = () => {
       loading={userLoading || answerLogsLoading}
     >
       <div className="w-screen flex ">
-        <ProfileCard user={user || undefined} display="answered" />
+        <ProfileCard user={user || undefined} display="notification" />
         <div className="md:w-3/4 md:p-12 w-full">
           <div className="w-full flex flex-col items-center">
-            <h1 className="text-2xl font-bold">あなたへのお知らせ</h1>
+            <h1 className="text-xl md:text-2xl font-bold mt-4">
+              あなたへのお知らせ
+            </h1>
             <div className="w-full mt-4">
               {answerLogs.map((log) => (
                 <>

@@ -28,7 +28,9 @@ export const ProfilePage = () => {
       <div className="w-screen flex ">
         <ProfileCard user={user || undefined} display="profile" />
         <div className="md:w-3/4 md:p-12 w-full">
-          <h2 className="text-2xl font-bold mt-4 text-center">プロフィール</h2>
+          <h2 className="text-xl md:text-2xl font-bold mt-4 text-center">
+            プロフィール
+          </h2>
           <TableContainer className="mt-8 w-[90%] mx-[5%]">
             <Table variant="simple" size={tableSize}>
               <Thead>

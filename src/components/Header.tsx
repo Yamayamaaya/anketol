@@ -15,6 +15,7 @@ import {
   DrawerHeader,
   DrawerBody,
   Divider,
+  AvatarBadge,
 } from '@chakra-ui/react'
 import { useAuthContext } from '@src/feature/auth/provider/AuthProvider'
 import { getAuth, signOut } from 'firebase/auth'
@@ -92,7 +93,9 @@ export const Header: React.FC<HeaderProps> = ({ isSignInOrUpPage }) => {
                 width={10}
                 height={10}
                 src={user.photoURL || 'default_image_url'}
-              />
+              >
+                <AvatarBadge boxSize="0.75em" bg="green.500" />
+              </Avatar>
             </MenuButton>
             <MenuList py={0}>
               <h4 className="px-3 pt-2 text-sm font-semibold text-gray-700">
