@@ -1,7 +1,7 @@
 import { useAuthContext } from '@src/feature/auth/provider/AuthProvider'
 import type { ReactNode } from 'react'
 import { Box } from '@chakra-ui/react'
-import { useRouter } from '@src/hooks/hooks/useRouter'
+import { useRouter } from '@src/hooks/useRouter'
 
 type Props = {
   children: ReactNode

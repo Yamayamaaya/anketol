@@ -1,7 +1,7 @@
 import { Button, useToast } from '@chakra-ui/react'
 import { useState } from 'react'
 import { FirebaseError } from '@firebase/util'
-import { useRouter } from '@src/hooks/hooks/useRouter'
+import { useRouter } from '@src/hooks/useRouter'
 import { useSignInWithGoogle } from '@src/hooks/firebase/useSignInWithGoogle'
 import Image from 'next/image'
 
