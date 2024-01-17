@@ -17,17 +17,20 @@ type ProfileCardProps = {
 export const ProfileCard = ({ user, display }: ProfileCardProps) => {
   const router = useRouter()
   return (
-    <div className="w-1/4 flex hidden md:block">
-      <div className="w-4/5 mx-auto  flex min-w-[180px] h-max flex-col items-center justify-center shadow-lg gap-2 mt-12 rounded-md">
+    <div className="w-1/4  flex hidden md:block">
+      <div
+        className={`mr-[calc((100%-210px)/2)] ml-[calc((100%-210px)/2+2rem)] flex w-[210px] h-max flex-col items-center justify-center shadow-lg gap-2 mt-12 rounded-md`}
+      >
         <Avatar
           flexShrink={0}
           width={10}
           height={10}
           src={user?.photoURL || 'default_image_url'}
+          mt={4}
         />
         <p>{user?.displayName}</p>
         <Divider />
-        <div className="flex flex-col items-start justify-center gap-2 my-4">
+        <div className="flex flex-col items-start justify-center gap-2 my-4 px-4">
           <button
             className={` flex items-center gap-1.5 ${
               display === 'profile' ? 'text-black' : 'text-gray-500'
