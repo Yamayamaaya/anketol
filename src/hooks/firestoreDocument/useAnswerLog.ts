@@ -39,3 +39,67 @@ export const useAnswerLogsByRespondentGmail = (respondentGmail: string) => {
 
   return { answerLogs, loading, error }
 }
+
+export const useAnswerLogsByQuestionnaireId = (questionnaireId: string) => {
+  const [answerLogs, setAnswerLogs] = useState<AnswerLog[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+  const [error, setError] = useState<Error | null>(null)
+
+  useEffect(() => {
+    const fetchAnswerLogs = async () => {
+      try {
+        const db = getFirestore()
+        const querySnapshot = await getDocs(
+          query(
+            collection(db, 'answerLogs'),
+            where('questionnaireId', '==', questionnaireId)
+          )
+        )
+        const answerLogs = querySnapshot.docs.map(
+          (doc) => ({ id: doc.id, ...doc.data() } as AnswerLog)
+        )
+        setAnswerLogs(answerLogs)
+      } catch (e) {
+        setError(e as Error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchAnswerLogs()
+  }, [questionnaireId])
+
+  return { answerLogs, loading, error }
+}
+
+export const useAnswerLogsByQuestionnaireIds = (questionnaireIds: string[]) => {
+  const [answerLogs, setAnswerLogs] = useState<AnswerLog[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+  const [error, setError] = useState<Error | null>(null)
+
+  useEffect(() => {
+    const fetchAnswerLogs = async () => {
+      try {
+        const db = getFirestore()
+        const querySnapshot = await getDocs(
+          query(
+            collection(db, 'answerLogs'),
+            where('questionnaireId', 'in', questionnaireIds)
+          )
+        )
+        const answerLogs = querySnapshot.docs.map(
+          (doc) => ({ id: doc.id, ...doc.data() } as AnswerLog)
+        )
+        setAnswerLogs(answerLogs)
+      } catch (e) {
+        setError(e as Error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchAnswerLogs()
+  }, [questionnaireIds])
+
+  return { answerLogs, loading, error }
+}

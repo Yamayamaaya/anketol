@@ -31,6 +31,7 @@ import {
 import { useRouter } from 'next/router'
 import { activateQuestionnaire } from '@src/feature/questionnaire/activateQuestionneaire'
 import { requestForGAS } from '@src/feature/GAS/requestForGAS'
+import { omitTimestamp } from '@src/feature/omitTimestamp'
 
 interface CardProps {
   questionnaire: Questionnaire
@@ -45,9 +46,9 @@ export const CardItem = ({ questionnaire, user }: CardProps) => {
 
   useEffect(() => {}, [loading, loadingAnswerLogs])
 
-  const isAnswered = answerLogs.some(
-    (answerLog) => answerLog.formId === questionnaire.id
-  )
+  const isAnswered =
+    answerLogs.some((answerLog) => answerLog.formId === questionnaire.id) &&
+    answerLogs.length > 0
 
   const toast = useToast()
   const router = useRouter()
@@ -172,7 +173,7 @@ export const CardItem = ({ questionnaire, user }: CardProps) => {
           </div>
         ) : isAnswered ? (
           <p className="text-xs md:text-sm">
-            回答日時：{answerLogs[0]?.createdTime.toDate().toLocaleString()}
+            回答日時：{omitTimestamp(answerLogs[0]?.createdTime!)}
           </p>
         ) : (
           <button
