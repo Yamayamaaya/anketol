@@ -9,7 +9,6 @@ import { useQuestionnairesByIds } from '@src/hooks/firestoreDocument/useQuestion
 export const AnsweredPage = () => {
   const { user: authUser } = useAuthContext()
   const { user, loading: userLoading } = useUserById(authUser?.uid)
-  console.log(user)
   const { answerLogs, loading: questionnairesLoading } =
     useAnswerLogsByRespondentGmail(user?.email || '')
 
