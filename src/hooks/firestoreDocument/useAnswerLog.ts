@@ -84,7 +84,7 @@ export const useAnswerLogsByQuestionnaireIds = (questionnaireIds: string[]) => {
         const querySnapshot = await getDocs(
           query(
             collection(db, 'answerLogs'),
-            where('questionnaireId', 'in', questionnaireIds)
+            where('formId', 'in', questionnaireIds)
           )
         )
         const answerLogs = querySnapshot.docs.map(
@@ -99,7 +99,7 @@ export const useAnswerLogsByQuestionnaireIds = (questionnaireIds: string[]) => {
     }
 
     fetchAnswerLogs()
-  }, [questionnaireIds])
+  }, [questionnaireIds.length])
 
   return { answerLogs, loading, error }
 }

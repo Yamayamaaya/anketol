@@ -20,9 +20,11 @@ export const NotificationPage = () => {
   const { questionnaires } = useQuestionnairesByUserId(user?.id)
 
   // 自分のアンケートIDのリストを取得
+
   const myQuestionnaireIds = questionnaires.map((q) => q.id)
 
   // 自分のアンケートに対する回答ログを取得
+
   const { answerLogs: myAnswerLogs } =
     useAnswerLogsByQuestionnaireIds(myQuestionnaireIds)
 
@@ -44,7 +46,7 @@ export const NotificationPage = () => {
 
   useEffect(() => {
     updateLastNotificationCheckTime()
-  }, [user])
+  }, [user?.id])
 
   return (
     <CustomPage
