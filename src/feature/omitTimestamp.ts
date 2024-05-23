@@ -6,6 +6,6 @@ export const omitTimestamp = (timestamp: Timestamp) => {
   const month = date.getMonth() + 1
   const day = date.getDate()
   const hours = date.getHours()
-  const minutes = date.getMinutes()
+  const minutes = `0${date.getMinutes()}`.slice(-2)
   return `${month}/${day}  ${hours}:${minutes}`
 }
