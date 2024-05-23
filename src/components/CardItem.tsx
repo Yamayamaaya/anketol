@@ -32,6 +32,7 @@ import { useRouter } from 'next/router'
 import { activateQuestionnaire } from '@src/feature/questionnaire/activateQuestionneaire'
 import { requestForGAS } from '@src/feature/GAS/requestForGAS'
 import { omitTimestamp } from '@src/feature/omitTimestamp'
+import { useDeleteDataOnFirestore } from '@src/hooks/firebase/useDeleteDataOnFirestore'
 
 interface CardProps {
   questionnaire: Questionnaire
@@ -52,13 +53,12 @@ export const CardItem = ({ questionnaire, user }: CardProps) => {
 
   const toast = useToast()
   const router = useRouter()
+  const deleteData = useDeleteDataOnFirestore()
 
   const isOwnQuestionnaire = questionnaire.userId === user?.id
 
   const handleDeleteQuestionnaire = async (questionnaireId: string) => {
-    const db = getFirestore()
-    const docRef = doc(db, 'questionnaires', questionnaireId)
-    await deleteDoc(docRef)
+    await deleteData('questionnaires', questionnaireId)
     toast({
       title: '削除しました。',
       status: 'success',
