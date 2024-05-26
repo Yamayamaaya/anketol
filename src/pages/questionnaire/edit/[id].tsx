@@ -2,7 +2,7 @@
 import { useState, useEffect, FormEvent } from 'react'
 import { useRouter } from 'next/router'
 import { getFirestore, doc, getDoc, updateDoc } from '@firebase/firestore'
-import { useToast } from '@chakra-ui/react'
+import { useCustomToast } from '@src/hooks/useCustomToast'
 import 'react-datepicker/dist/react-datepicker.css'
 import 'tailwindcss/tailwind.css'
 import type { Questionnaire } from '@src/types/questionnaire'
@@ -23,7 +23,7 @@ export const Page = () => {
   const [inputError, setInputError] = useState<string>('')
   const router = useRouter()
   const { id } = router.query
-  const toast = useToast()
+  const toast = useCustomToast()
 
   useEffect(() => {
     const fetchQuestionnaire = async () => {
@@ -61,17 +61,9 @@ export const Page = () => {
         router.push('/')
       }
       setInputError('')
-      toast({
-        title: '更新しました。',
-        status: 'success',
-        position: 'top',
-      })
+      toast('success', '更新しました。')
     } catch (e) {
-      toast({
-        title: 'エラーが発生しました。',
-        status: 'error',
-        position: 'top',
-      })
+      toast('error', 'エラーが発生しました。')
     }
   }
 

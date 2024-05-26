@@ -7,7 +7,6 @@ import {
   MenuItem,
   MenuList,
   MenuGroup,
-  useToast,
   Drawer,
   DrawerOverlay,
   DrawerContent,
@@ -17,6 +16,7 @@ import {
   Divider,
   AvatarBadge,
 } from '@chakra-ui/react'
+import { useCustomToast } from '@src/hooks/useCustomToast'
 import { useAuthContext } from '@src/feature/auth/provider/AuthProvider'
 import { getAuth, signOut } from 'firebase/auth'
 import { Navigate } from '@src/components/Navigate'
@@ -35,7 +35,7 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ isSignInOrUpPage }) => {
   const { user: AuthUser } = useAuthContext()
   const { user } = useUserById(AuthUser?.uid)
-  const toast = useToast()
+  const toast = useCustomToast()
   const { push } = useRouter()
   const [isOpen, setIsOpen] = useState(false)
   const haveUncheckNotification = useHaveUncheckNotification(user!)
@@ -44,11 +44,7 @@ export const Header: React.FC<HeaderProps> = ({ isSignInOrUpPage }) => {
     try {
       const auth = getAuth()
       await signOut(auth)
-      toast({
-        title: 'サインアウトしました。',
-        status: 'success',
-        position: 'top',
-      })
+      toast("success", 'サインアウトしました。')
       push((path) => path.signin.$url())
     } catch (e) {
       console.error('Firebase Authentication Error', e)
@@ -63,9 +59,8 @@ export const Header: React.FC<HeaderProps> = ({ isSignInOrUpPage }) => {
     <chakra.header
       py={4}
       bgColor={'#FF9A00'}
-      className={`sticky top-0 z-50 ${
-        isSignInOrUpPage ? 'md:w-[40%]' : ''
-      } left-0`}
+      className={`sticky top-0 z-50 ${isSignInOrUpPage ? 'md:w-[40%]' : ''
+        } left-0`}
     >
       <div className="flex items-center justify-between w-full px-8">
         <button onClick={handleToggle} className="w-8 h-8 text-white">
