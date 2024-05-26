@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import CustomSpinner from '@src/components/CustomSpinner'
+import { Spinner } from '@chakra-ui/react'
 
 type PageProps = {
   title: string
@@ -43,7 +43,13 @@ const CustomPage: React.FC<PageProps> = ({
           </h1>
         )}
         {loading && (
-          <CustomSpinner caption={'読込中…'} />
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+          />
         )}
         {(!isAuthPageHidden || !loading) && children}
       </div>
