@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { collection, addDoc, getFirestore } from 'firebase/firestore'
-import { Input, Textarea, Button, useToast } from '@chakra-ui/react'
+import { Input, Textarea, Button } from '@chakra-ui/react'
+import { useCustomToast } from '@src/hooks/useCustomToast'
 import type { Contact } from '@src/types/contacts'
 import { useAuthContext } from '@src/feature/auth/provider/AuthProvider'
 import type { FirebaseError } from 'firebase/app'
@@ -19,7 +20,7 @@ export const ContactPage = () => {
 
   const [inputError, setInputError] = useState<string>('')
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
-  const toast = useToast()
+  const toast = useCustomToast()
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -46,19 +47,10 @@ export const ContactPage = () => {
       updatedTime: new Date(),
     })
       .catch((error: FirebaseError) => {
-        toast({
-          title: 'エラーが発生しました。',
-          description: error.message,
-          status: 'error',
-          position: 'top',
-        })
+        toast('error', 'エラーが発生しました。', error.message)
       })
       .then(() => {
-        toast({
-          title: 'お問い合わせが完了しました',
-          status: 'success',
-          position: 'top',
-        })
+        toast('success', 'お問い合わせが完了しました')
         setIsSubmitted(true)
       })
 

@@ -1,7 +1,7 @@
 // src/pages/questionnaire/index.tsx
 import { useState } from 'react'
 import type { FormEvent } from 'react'
-import { useToast } from '@chakra-ui/react' // Added Alert, AlertIcon
+import { useCustomToast } from '@src/hooks/useCustomToast'
 import 'react-datepicker/dist/react-datepicker.css'
 import 'tailwindcss/tailwind.css'
 import { useAuthContext } from '@src/feature/auth/provider/AuthProvider'
@@ -28,7 +28,7 @@ export const Page = () => {
   const [inputError, setInputError] = useState<string>('')
   const { user } = useAuthContext()
   const router = useRouter()
-  const toast = useToast()
+  const toast = useCustomToast()
   const saveDataToFirestore = useSaveDataToFirestore() // Added hook
 
   const handleSendQuestionnaire = async (e: FormEvent<HTMLFormElement>) => {
@@ -42,11 +42,7 @@ export const Page = () => {
 
     const id = await extractFormId(questionnaire.editUrl)
     if (!user || !id) {
-      toast({
-        title: 'エラーが発生しました。',
-        status: 'error',
-        position: 'top',
-      })
+      toast("error", 'エラーが発生しました。')
       return
     }
     try {
@@ -54,19 +50,11 @@ export const Page = () => {
       await activateQuestionnaire(id)
 
       resetForm()
-      toast({
-        title: '投稿しました。',
-        status: 'success',
-        position: 'top',
-      })
+      toast("success", '投稿しました。')
       router.push('/doc/SetUpAndHelp')
     } catch (e) {
       console.error('Firebase Error', e)
-      toast({
-        title: 'エラーが発生しました。',
-        status: 'error',
-        position: 'top',
-      })
+      toast("error", 'エラーが発生しました。')
     }
   }
 

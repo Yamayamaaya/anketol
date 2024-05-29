@@ -19,7 +19,6 @@ import type { Questionnaire } from '@src/types/questionnaire'
 import type { User } from '@src/types/user'
 import { useAnswerLogsByRespondentGmail } from '@src/hooks/firestoreDocument/useAnswerLog'
 import {
-  useToast,
   TableContainer,
   Table,
   Thead,
@@ -44,13 +43,13 @@ export const CardItem = ({ questionnaire, user }: CardProps) => {
   const { answerLogs, loading: loadingAnswerLogs } =
     useAnswerLogsByRespondentGmail(user?.email || '')
 
-  useEffect(() => {}, [loading, loadingAnswerLogs])
+  useEffect(() => { }, [loading, loadingAnswerLogs])
 
   const isAnswered =
     answerLogs.some((answerLog) => answerLog.formId === questionnaire.id) &&
     answerLogs.length > 0
 
-  const toast = useToast()
+  const toast = useCustomToast()
   const router = useRouter()
   const deleteData = useDeleteDataOnFirestore()
 
@@ -58,11 +57,8 @@ export const CardItem = ({ questionnaire, user }: CardProps) => {
 
   const handleDeleteQuestionnaire = async (questionnaireId: string) => {
     await deleteData('questionnaires', questionnaireId)
-    toast({
-      title: '削除しました。',
-      status: 'success',
-      position: 'top',
-    })
+    toast('success', '削除しました。')
+
     router.reload()
   }
 
@@ -72,11 +68,7 @@ export const CardItem = ({ questionnaire, user }: CardProps) => {
 
   const onChangeActive = async (questionnaireId: string) => {
     await activateQuestionnaire(questionnaireId)
-    toast({
-      title: '更新しました。',
-      status: 'success',
-      position: 'top',
-    })
+    toast('success', '更新しました。')
     setTimeout(() => {
       router.reload()
     }, 200)
@@ -210,11 +202,11 @@ export const CardItem = ({ questionnaire, user }: CardProps) => {
                     {questionnaire.createdTime.toDate().toLocaleString()}
                     {questionnaire.createdTime.toDate().toLocaleString() !==
                       questionnaire.updatedTime.toDate().toLocaleString() && (
-                      <p className="text-xs text-gray-800 mt-0.5">
-                        (更新日:
-                        {questionnaire.updatedTime.toDate().toLocaleString()})
-                      </p>
-                    )}
+                        <p className="text-xs text-gray-800 mt-0.5">
+                          (更新日:
+                          {questionnaire.updatedTime.toDate().toLocaleString()})
+                        </p>
+                      )}
                   </Td>
                 </Tr>
                 <Tr>

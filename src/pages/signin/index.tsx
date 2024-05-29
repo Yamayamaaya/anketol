@@ -1,4 +1,5 @@
-import { Button, useToast } from '@chakra-ui/react'
+import { Button } from '@chakra-ui/react'
+import { useCustomToast } from '@src/hooks/useCustomToast'
 import { useState } from 'react'
 import { FirebaseError } from '@firebase/util'
 import { useRouter } from '@src/hooks/useRouter'
@@ -6,7 +7,7 @@ import { useSignInWithGoogle } from '@src/hooks/firebase/useSignInWithGoogle'
 import Image from 'next/image'
 
 export const Page = () => {
-  const toast = useToast()
+  const toast = useCustomToast()
   const { push } = useRouter()
   const signInWithGoogle = useSignInWithGoogle()
   const [mode, setMode] = useState<'signin' | 'signup'>('signin')
@@ -14,19 +15,10 @@ export const Page = () => {
   const handleGoogleSignInOrUp = async () => {
     try {
       await signInWithGoogle()
-      toast({
-        title:
-          mode === 'signin' ? 'サインインしました。' : 'サインアップしました。',
-        status: 'success',
-        position: 'top',
-      })
+      toast('success', mode === 'signin' ? 'サインインしました。' : 'サインアップしました。')
       push((path) => path.$url())
     } catch (e) {
-      toast({
-        title: 'エラーが発生しました。',
-        status: 'error',
-        position: 'top',
-      })
+      toast('error', 'エラーが発生しました。')
       if (e instanceof FirebaseError) {
         console.error('Firebase Authentication Error', e)
       }
