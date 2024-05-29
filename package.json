@@ -36,6 +36,7 @@
     "react-datepicker": "^4.24.0",
     "react-dom": "18.2.0",
     "react-markdown": "^9.0.1",
+    "run-s": "^0.0.0",
     "utility-types": "^3.10.0"
   },
   "devDependencies": {
