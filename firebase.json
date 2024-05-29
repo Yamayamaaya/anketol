@@ -1,14 +1,16 @@
 {
   "hosting": {
     "source": ".",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "frameworksBackend": {
       "region": "asia-east1"
-    }
+    },
+    "rewrites": [
+      {
+        "source": "/questionnaire/edit/:id",
+        "destination": "/questionnaire/edit/[id].html"
+      }
+    ]
   },
   "functions": {
     "source": "functions"
