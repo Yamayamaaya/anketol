@@ -18,8 +18,6 @@ import { useEffect } from 'react'
 import type { Questionnaire } from '@src/types/questionnaire'
 import type { User } from '@src/types/user'
 import { useAnswerLogsByRespondentGmail } from '@src/hooks/firestoreDocument/useAnswerLog'
-import { getFirestore, doc, deleteDoc } from 'firebase/firestore'
-import { useCustomToast } from '@src/hooks/useCustomToast'
 import {
   TableContainer,
   Table,
