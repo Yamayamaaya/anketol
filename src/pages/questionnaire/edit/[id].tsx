@@ -1,7 +1,7 @@
 // src/pages/questionnaire/edit/[id].tsx
 import { useState, useEffect, FormEvent } from 'react'
 import { useRouter } from 'next/router'
-import { getFirestore, doc, getDoc, updateDoc } from '@firebase/firestore'
+import { getFirestore, doc, getDoc, updateDoc, onSnapshot } from '@firebase/firestore'
 import { useToast } from '@chakra-ui/react'
 import 'react-datepicker/dist/react-datepicker.css'
 import 'tailwindcss/tailwind.css'
@@ -26,19 +26,24 @@ export const Page = () => {
   const toast = useToast()
 
   useEffect(() => {
-    const fetchQuestionnaire = async () => {
+    const fetchQuestionnaire = () => {
       const db = getFirestore()
       if (!id) {
         return
       }
       const docRef = doc(db, 'questionnaires', id as string)
-      const docSnap = await getDoc(docRef)
-      if (docSnap.exists()) {
-        setQuestionnaire(docSnap.data() as Questionnaire)
-      }
+
+      return onSnapshot(docRef, (docSnap) => {
+        console.log(docSnap.data())
+        if (docSnap.exists()) {
+          setQuestionnaire(docSnap.data() as Questionnaire)
+        }
+      });
+
     }
 
     fetchQuestionnaire()
+
   }, [id])
 
   const handleUpdateQuestionnaire = async (e: FormEvent<HTMLFormElement>) => {
